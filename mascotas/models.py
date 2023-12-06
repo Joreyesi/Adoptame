@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 class Mascota(models.Model):
     id_mascotas = models.AutoField(primary_key=True)
-    usuario = models.ForeignKey('mascotas.Usuario', on_delete=models.CASCADE)  # Asegúrate de reemplazar 'TuApp' con el nombre real de tu aplicación.
+    usuario = models.ForeignKey('mascotas.Usuario', related_name='mascotas', on_delete=models.CASCADE)
     nombre_m = models.CharField(max_length=100)
     raza_m = models.CharField(max_length=100)
     vacuna_m = models.BooleanField(default=False)
@@ -16,6 +16,7 @@ class Mascota(models.Model):
     comportamiento_m = models.TextField()
     peso_m = models.FloatField()
     especie_m = models.CharField(max_length=50)
+
     class Meta:
         app_label = 'mascotas'
 
