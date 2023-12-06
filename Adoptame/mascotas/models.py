@@ -35,3 +35,19 @@ class Mascota(models.Model):
 
     def __str__(self):
         return f"{self.nombre_u} {self.apellido_u}"
+    
+
+    class Organizacion(models.Model):
+    id_org_o = models.AutoField(primary_key=True)
+    rut_usuario = models.ForeignKey('Adoptame.Usuario', on_delete=models.CASCADE)  # Asegúrate de reemplazar 'TuApp' con el nombre real de tu aplicación.
+    personal_o = models.IntegerField()
+    mascotas_o = models.IntegerField()
+    ciudad_o = models.CharField(max_length=100)
+    calle_o = models.CharField(max_length=255)
+    tipo_personal_o = models.CharField(max_length=50)
+    tipo_mascotas_o = models.CharField(max_length=50)
+    n_calle_o = models.CharField(max_length=10)
+    cantidad_mascotas_o = models.IntegerField()
+
+    def __str__(self):
+        return f"Organización #{self.id_org_o}"
