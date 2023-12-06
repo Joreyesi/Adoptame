@@ -77,3 +77,14 @@ class Mascota(models.Model):
     def __str__(self):
         return f"Publicación #{self.id_p}"
     
+
+class Galeria(models.Model):
+    id_galeria = models.AutoField(primary_key=True)
+    id_mascota = models.ForeignKey('TuApp.Mascota', on_delete=models.CASCADE)  # Asegúrate de reemplazar 'TuApp' con el nombre real de tu aplicación.
+    cantidad_fotos_g = models.IntegerField()
+    descripcion_g = models.TextField(blank=True, null=True)
+    tipo_mascota_g = models.CharField(max_length=50)
+    perfil_g = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Galería de mascota #{self.id_galeria}"
