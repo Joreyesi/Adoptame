@@ -63,3 +63,17 @@ class Mascota(models.Model):
 
     def __str__(self):
         return f"Estado de mascota #{self.id_mascotas_e}"
+    
+
+    class Publicacion(models.Model):
+    id_p = models.AutoField(primary_key=True)
+    id_org_o = models.ForeignKey('Adoptame.Organizacion', on_delete=models.CASCADE)  # Asegúrate de reemplazar 'TuApp' con el nombre real de tu aplicación.
+    nombres_p = models.CharField(max_length=100)
+    nombre_mascota_p = models.CharField(max_length=100)
+    fecha_p = models.DateField()
+    comentario_p = models.TextField()
+    cantidad_p = models.IntegerField()
+
+    def __str__(self):
+        return f"Publicación #{self.id_p}"
+    
