@@ -34,6 +34,7 @@ class Usuario(AbstractUser):
     telefono_u = models.CharField(max_length=15)
     ciudad_u = models.CharField(max_length=100)
     tipo_usuario_u = models.CharField(max_length=20)
+    user_groups = models.ManyToManyField('Group', related_name='usuarios', blank=True)  # Cambiado el related_name
 
     def __str__(self):
         return f"{self.nombre_u} {self.apellido_u}"
