@@ -80,7 +80,7 @@ class Mascota(models.Model):
 
 class Galeria(models.Model):
     id_galeria = models.AutoField(primary_key=True)
-    id_mascota = models.ForeignKey('TuApp.Mascota', on_delete=models.CASCADE)  # Asegúrate de reemplazar 'TuApp' con el nombre real de tu aplicación.
+    id_mascota = models.ForeignKey('Adoptame.Mascota', on_delete=models.CASCADE)  # Asegúrate de reemplazar 'TuApp' con el nombre real de tu aplicación.
     cantidad_fotos_g = models.IntegerField()
     descripcion_g = models.TextField(blank=True, null=True)
     tipo_mascota_g = models.CharField(max_length=50)
@@ -88,3 +88,13 @@ class Galeria(models.Model):
 
     def __str__(self):
         return f"Galería de mascota #{self.id_galeria}"
+    
+
+    class Comuna(models.Model):
+    nombre_c = models.CharField(max_length=100, primary_key=True)
+    nombre_r = models.ForeignKey('Adoptame.Region', on_delete=models.CASCADE)  # Asegúrate de reemplazar 'TuApp' con el nombre real de tu aplicación.
+    rut_usuario = models.ForeignKey('Adoptame.Usuario', on_delete=models.CASCADE)  # Asegúrate de reemplazar 'TuApp' con el nombre real de tu aplicación.
+    id_org_o = models.ForeignKey('Adoptame.Organizacion', on_delete=models.CASCADE, blank=True, null=True)  # Asegúrate de reemplazar 'TuApp' con el nombre real de tu aplicación.
+
+    def __str__(self):
+        return self.nombre_c
