@@ -51,3 +51,15 @@ class Mascota(models.Model):
 
     def __str__(self):
         return f"Organización #{self.id_org_o}"
+    
+    class Estado(models.Model):
+    id_mascotas_e = models.AutoField(primary_key=True)
+    id_mascota = models.ForeignKey('Adoptame.Mascota', on_delete=models.CASCADE)  # Asegúrate de reemplazar 'TuApp' con el nombre real de tu aplicación.
+    vacunas_e = models.BooleanField()
+    tipo_vacuna_e = models.CharField(max_length=50, blank=True, null=True)
+    tratamiento_e = models.TextField(blank=True, null=True)
+    historial_medico_e = models.TextField(blank=True, null=True)
+    nutricion_e = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f"Estado de mascota #{self.id_mascotas_e}"
