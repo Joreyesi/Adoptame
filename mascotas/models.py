@@ -1,5 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, Group, Permission
+
 
 # Create your models here.
 class Mascota(models.Model):
@@ -33,7 +34,10 @@ class Usuario(AbstractUser):
     telefono_u = models.CharField(max_length=15)
     ciudad_u = models.CharField(max_length=100)
     tipo_usuario_u = models.CharField(max_length=20)
-
+    
+    # Cambiar related_name para evitar conflictos con 'auth.User'
+    user_groups = models.ManyToManyField(Group, related_name='usuarios_groups', blank=True)
+    user_permissions = models.ManyToManyField(Permission, related_name='usuarios_permissions', blank=True)
 
     def __str__(self):
         return f"{self.nombre_u} {self.apellido_u}"
