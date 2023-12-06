@@ -16,7 +16,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Adoptame',  # Reemplaza 'Adoptame' con el nombre real de tu aplicación
+    'Adoptame.apps.MascotasConfig',  # Reemplaza 'Adoptame' con el nombre real de tu aplicación
 ]
 
 # Middlewares
