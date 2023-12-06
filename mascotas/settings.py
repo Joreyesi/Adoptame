@@ -16,7 +16,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Adoptame.apps.MascotasConfig',  # Reemplaza 'Adoptame' con el nombre real de tu aplicación
+    'mascotas.apps.MascotasConfig',  # Reemplaza 'Adoptame' con el nombre real de tu aplicación
 ]
 
 # Middlewares
@@ -31,7 +31,7 @@ MIDDLEWARE = [
 ]
 
 # Configuración de URLs
-ROOT_URLCONF = 'Adoptame.urls'  # Reemplaza 'Adoptame' con el nombre real de tu aplicación
+ROOT_URLCONF = 'mascotas.urls'  # Reemplaza 'Adoptame' con el nombre real de tu aplicación
 
 # Plantillas
 TEMPLATES = [

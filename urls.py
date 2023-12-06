@@ -4,5 +4,5 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('Adoptame/', include('Adoptame.urls')),  # Reemplaza 'tuapp' con el nombre real de tu aplicación
+    path('mascotas/', include('mascotas.urls')),  # Reemplaza 'tuapp' con el nombre real de tu aplicación
 ]
