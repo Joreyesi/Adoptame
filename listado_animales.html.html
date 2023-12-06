@@ -1,0 +1,16 @@
+<!-- En tu archivo listado_animales.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Animales en Adopción</title>
+</head>
+<body>
+    <h1>Listado de Animales en Adopción</h1>
+    <ul>
+        {% for animal in animales %}
+            <li>{{ animal.nombre }} - {{ animal.descripcion }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
