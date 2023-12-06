@@ -21,7 +21,7 @@ class Mascota(models.Model):
         return self.nombre_m
     
 
-    class Usuario(AbstractUser):
+class Usuario(AbstractUser):
     rut_usuario = models.CharField(max_length=12, primary_key=True)
     nombre_u = models.CharField(max_length=100)
     apellido_u = models.CharField(max_length=100)
@@ -37,7 +37,7 @@ class Mascota(models.Model):
         return f"{self.nombre_u} {self.apellido_u}"
     
 
-    class Organizacion(models.Model):
+class Organizacion(models.Model):
     id_org_o = models.AutoField(primary_key=True)
     rut_usuario = models.ForeignKey('Adoptame.Usuario', on_delete=models.CASCADE)  # Asegúrate de reemplazar 'TuApp' con el nombre real de tu aplicación.
     personal_o = models.IntegerField()
@@ -52,7 +52,7 @@ class Mascota(models.Model):
     def __str__(self):
         return f"Organización #{self.id_org_o}"
     
-    class Estado(models.Model):
+class Estado(models.Model):
     id_mascotas_e = models.AutoField(primary_key=True)
     id_mascota = models.ForeignKey('Adoptame.Mascota', on_delete=models.CASCADE)  # Asegúrate de reemplazar 'TuApp' con el nombre real de tu aplicación.
     vacunas_e = models.BooleanField()
@@ -65,7 +65,7 @@ class Mascota(models.Model):
         return f"Estado de mascota #{self.id_mascotas_e}"
     
 
-    class Publicacion(models.Model):
+class Publicacion(models.Model):
     id_p = models.AutoField(primary_key=True)
     id_org_o = models.ForeignKey('Adoptame.Organizacion', on_delete=models.CASCADE)  # Asegúrate de reemplazar 'TuApp' con el nombre real de tu aplicación.
     nombres_p = models.CharField(max_length=100)
@@ -90,7 +90,7 @@ class Galeria(models.Model):
         return f"Galería de mascota #{self.id_galeria}"
     
 
-    class Comuna(models.Model):
+class Comuna(models.Model):
     nombre_c = models.CharField(max_length=100, primary_key=True)
     nombre_r = models.ForeignKey('Adoptame.Region', on_delete=models.CASCADE)  # Asegúrate de reemplazar 'TuApp' con el nombre real de tu aplicación.
     rut_usuario = models.ForeignKey('Adoptame.Usuario', on_delete=models.CASCADE)  # Asegúrate de reemplazar 'TuApp' con el nombre real de tu aplicación.
@@ -100,7 +100,7 @@ class Galeria(models.Model):
         return self.nombre_c
     
 
-    class Region(models.Model):
+class Region(models.Model):
     nombre_r = models.CharField(max_length=100, primary_key=True)
 
     def __str__(self):
