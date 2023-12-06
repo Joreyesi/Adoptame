@@ -16,6 +16,8 @@ class Mascota(models.Model):
     comportamiento_m = models.TextField()
     peso_m = models.FloatField()
     especie_m = models.CharField(max_length=50)
+    class Meta:
+        app_label = 'Adoptame'
 
     def __str__(self):
         return self.nombre_m
