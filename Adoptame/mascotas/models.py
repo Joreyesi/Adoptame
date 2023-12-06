@@ -1,9 +1,10 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class Mascota(models.Model):
     id_mascotas = models.AutoField(primary_key=True)
-    rut_usuario = models.ForeignKey('TuApp.Usuario', on_delete=models.CASCADE)  # Asegúrate de reemplazar 'TuApp' con el nombre real de tu aplicación.
+    rut_usuario = models.ForeignKey('Adoptame.Usuario', on_delete=models.CASCADE)  # Asegúrate de reemplazar 'TuApp' con el nombre real de tu aplicación.
     nombre_m = models.CharField(max_length=100)
     raza_m = models.CharField(max_length=100)
     vacuna_m = models.BooleanField(default=False)
@@ -18,3 +19,19 @@ class Mascota(models.Model):
 
     def __str__(self):
         return self.nombre_m
+    
+
+    class Usuario(AbstractUser):
+    rut_usuario = models.CharField(max_length=12, primary_key=True)
+    nombre_u = models.CharField(max_length=100)
+    apellido_u = models.CharField(max_length=100)
+    genero_u = models.CharField(max_length=10)
+    fecha_nac_u = models.DateField()
+    id_u = models.CharField(max_length=20, unique=True)
+    contraseña_u = models.CharField(max_length=100)  # Considera utilizar un campo más seguro para contraseñas en un entorno de producción.
+    telefono_u = models.CharField(max_length=15)
+    ciudad_u = models.CharField(max_length=100)
+    tipo_usuario_u = models.CharField(max_length=20)
+
+    def __str__(self):
+        return f"{self.nombre_u} {self.apellido_u}"
