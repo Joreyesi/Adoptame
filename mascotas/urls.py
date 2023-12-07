@@ -1,9 +1,9 @@
 # mascotas/urls.py
 
 from django.urls import path
-from .views import listado_animales  # Asegúrate de importar la vista correcta
+from .views import listado_animales
 
 urlpatterns = [
-    path('listado_animales/', listado_animales, name='listado_animales'),
+    path('mascotas/listado_animales/', listado_animales, name='listado_animales'),
     # Otras rutas pueden ir aquí
 ]
