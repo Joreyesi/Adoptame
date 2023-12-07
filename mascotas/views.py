@@ -7,4 +7,4 @@ from .models import Mascota
 
 def listado_animales(request):
     animales = Mascota.objects.all()
-    return render(request, 'listado_animales.html', {'animales': animales})
+    return render(request, 'mascotas/listado_animales.html')
