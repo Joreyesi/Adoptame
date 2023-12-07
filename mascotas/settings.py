@@ -38,7 +38,7 @@ ROOT_URLCONF = 'mascotas.urls'  # Reemplaza 'Adoptame' con el nombre real de tu 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'mascotas', 'templates')],  # Ajusta la ruta según la estructura de tu proyecto
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
