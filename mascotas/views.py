@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages  # Importa la clase messages
+from .forms import MascotaForm
 from .models import Mascota
-from .forms import MascotaForm 
 
 
 # Create your views here.
@@ -17,7 +18,8 @@ def ingresar_mascota(request):
         form = MascotaForm(request.POST)
         if form.is_valid():
             form.save()
-            # Puedes agregar un mensaje de éxito aquí
+            # Agrega un mensaje de éxito
+            messages.success(request, 'La mascota fue ingresada correctamente.')
             return redirect('listado_mascotas')
     else:
         form = MascotaForm()
