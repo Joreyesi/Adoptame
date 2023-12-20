@@ -17,6 +17,7 @@ def ingresar_mascota(request):
         form = MascotaForm(request.POST)
         if form.is_valid():
             form.save()
+            # Puedes agregar un mensaje de éxito aquí
             return redirect('listado_mascotas')
     else:
         form = MascotaForm()
