@@ -1,11 +1,52 @@
 <!-- mascotas/templates/mascotas/ingresar_mascota.html -->
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ingresar Mascota</title>
 </head>
 <body>
     <h1>Ingresar Mascota</h1>
-    <!-- Tu formulario aquí -->
+    <form method="post" action="{% url 'ingresar_mascota' %}">
+        {% csrf_token %}
+        <label for="nombre_m">Nombre:</label>
+        <input type="text" name="nombre_m" required>
+        <br>
+        <label for="raza_m">Raza:</label>
+        <input type="text" name="raza_m" required>
+        <br>
+        <label for="vacuna_m">¿Vacunada?</label>
+        <input type="checkbox" name="vacuna_m">
+        <br>
+        <label for="tipo_m">Tipo:</label>
+        <input type="text" name="tipo_m" required>
+        <br>
+        <label for="genero_m">Género:</label>
+        <select name="genero_m" required>
+            <option value="Macho">Macho</option>
+            <option value="Hembra">Hembra</option>
+        </select>
+        <br>
+        <label for="fecha_nac_m">Fecha de Nacimiento:</label>
+        <input type="date" name="fecha_nac_m" required>
+        <br>
+        <label for="tamaño_m">Tamaño:</label>
+        <input type="text" name="tamaño_m" required>
+        <br>
+        <label for="color_m">Color:</label>
+        <input type="text" name="color_m" required>
+        <br>
+        <label for="comportamiento_m">Comportamiento:</label>
+        <textarea name="comportamiento_m" required></textarea>
+        <br>
+        <label for="peso_m">Peso:</label>
+        <input type="number" name="peso_m" required>
+        <br>
+        <label for="especie_m">Especie:</label>
+        <input type="text" name="especie_m" required>
+        <br>
+        <input type="submit" value="Ingresar Mascota">
+    </form>
 </body>
 </html>
