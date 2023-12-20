@@ -17,6 +17,13 @@
                 </div>
             {% endfor %}
         {% endif %}
+        
+        {% if form.errors %}
+            <div class="alert alert-danger" role="alert">
+                <strong>Error:</strong> Por favor, corrige los siguientes errores.
+            </div>
+        {% endif %}
+
         <form method="post" action="{% url 'ingresar_mascota' %}" class="needs-validation" novalidate>
             {% csrf_token %}
             {{ form.as_p }}
