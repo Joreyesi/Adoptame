@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages  # Importa la clase messages
 from .forms import MascotaForm
 from .models import Mascota, Usuario
+from datetime import datetime
 
 
 # Create your views here.
@@ -20,7 +21,11 @@ def ingresar_mascota(request):
             # Crea un usuario ficticio o selecciona uno existente
             usuario, created = Usuario.objects.get_or_create(
                 rut_usuario='usuario_ficticio',
-                defaults={'nombre_u': 'Usuario Ficticio', 'apellido_u': 'Ficticio'}
+                defaults={
+                    'nombre_u': 'Usuario Ficticio',
+                    'apellido_u': 'Ficticio',
+                    'fecha_nac_u': datetime.now()  # Agrega la fecha de nacimiento actual o proporciona la fecha correcta
+                }
             )
             # Asigna el usuario a la mascota
             mascota = form.save(commit=False)
