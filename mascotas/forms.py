@@ -6,6 +6,10 @@ from .models import Mascota
 class MascotaForm(forms.ModelForm):
     class Meta:
         model = Mascota
-        fields = '__all__'  # Puedes personalizar esto según las necesidades
+        fields = '__all__'
+        widgets = {
+            'fecha_nac_m': forms.TextInput(attrs={'type': 'date'}),
+            # Puedes agregar más personalizaciones aquí según tus necesidades
+        }
 
 # Otros formularios pueden ir aquí si es necesario
