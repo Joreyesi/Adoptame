@@ -8,8 +8,20 @@
 <body>
     <h1>Listado de Animales en Adopción</h1>
     <ul>
-        {% for animal in animales %}
-            <li>{{ animal.nombre }} - {{ animal.descripcion }}</li>
+        {% for mascota in animales %}
+            <li>
+                Nombre: {{ mascota.nombre_m }}<br>
+                Raza: {{ mascota.raza_m }}<br>
+                Vacunada: {% if mascota.vacuna_m %}Sí{% else %}No{% endif %}<br>
+                Tipo: {{ mascota.tipo_m }}<br>
+                Género: {{ mascota.genero_m }}<br>
+                Fecha de Nacimiento: {{ mascota.fecha_nac_m }}<br>
+                Tamaño: {{ mascota.tamaño_m }}<br>
+                Color: {{ mascota.color_m }}<br>
+                Comportamiento: {{ mascota.comportamiento_m }}<br>
+                Peso: {{ mascota.peso_m }}<br>
+                Especie: {{ mascota.especie_m }}<br>
+            </li>
         {% endfor %}
     </ul>
 </body>
