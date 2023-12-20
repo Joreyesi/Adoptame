@@ -5,6 +5,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('mascotas/', include('mascotas.urls')),  # Asegúrate de incluir correctamente las rutas de tu aplicación
+    path('', include('mascotas.urls')),  # Use una ruta vacía para la aplicación principal
     # Otras rutas pueden ir aquí
 ]
