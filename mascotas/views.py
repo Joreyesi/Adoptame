@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .models import Mascota
+from .forms import MascotaForm 
+
 
 # Create your views here.
 # En tu archivo views.py
 
-from .models import Mascota
 
 def listado_mascotas(request):
     mascotas = Mascota.objects.all()
@@ -11,5 +13,12 @@ def listado_mascotas(request):
 
 
 def ingresar_mascota(request):
-    # Lógica para ingresar mascota (puede ser un formulario)
-    return render(request, 'mascotas/ingresar_mascota.html')
+    if request.method == 'POST':
+        form = MascotaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('listado_mascotas')
+    else:
+        form = MascotaForm()
+
+    return render(request, 'mascotas/ingresar_mascota.html', {'form': form})
