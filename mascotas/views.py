@@ -5,9 +5,9 @@ from django.shortcuts import render
 
 from .models import Mascota
 
-def listado_animales(request):
-    animales = Mascota.objects.all()
-    return render(request, 'mascotas/listado_animales.html')
+def listado_mascotas(request):
+    mascotas = Mascota.objects.all()
+    return render(request, 'mascotas/listado_mascotas.html', {'mascotas': mascotas})
 
 
 def ingresar_mascota(request):
