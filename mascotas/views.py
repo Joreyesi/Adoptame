@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages  # Importa la clase messages
 from .forms import MascotaForm
 from .models import Mascota, Usuario
@@ -40,3 +40,9 @@ def ingresar_mascota(request):
         form = MascotaForm()
 
     return render(request, 'mascotas/ingresar_mascota.html', {'form': form})
+
+
+def eliminar_mascota(request, mascota_id):
+    mascota = get_object_or_404(Mascota, id_mascotas=mascota_id)
+    mascota.delete()
+    return redirect('listado_mascotas')
