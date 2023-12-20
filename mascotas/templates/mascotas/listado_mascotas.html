@@ -4,33 +4,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Listado de Animales en Adopción</title>
+    <!-- Agrega el enlace al CSS de Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-<body>
+<body class="container mt-5">
     <h1>Listado de Animales en Adopción</h1>
-    <ul>
+    <ul class="list-group">
         {% for mascota in mascotas %}
-            <li>
-                Nombre: {{ mascota.nombre_m }}<br>
-                Raza: {{ mascota.raza_m }}<br>
-                Vacunada: {% if mascota.vacuna_m %}Sí{% else %}No{% endif %}<br>
-                Tipo: {{ mascota.tipo_m }}<br>
-                Género: {{ mascota.genero_m }}<br>
-                Fecha de Nacimiento: {{ mascota.fecha_nac_m }}<br>
-                Tamaño: {{ mascota.tamaño_m }}<br>
-                Color: {{ mascota.color_m }}<br>
-                Comportamiento: {{ mascota.comportamiento_m }}<br>
-                Peso: {{ mascota.peso_m }}<br>
-                Especie: {{ mascota.especie_m }}<br>
+            <li class="list-group-item">
+                <strong>Nombre:</strong> {{ mascota.nombre_m }}<br>
+                <strong>Raza:</strong> {{ mascota.raza_m }}<br>
+                <strong>Vacunada:</strong> {% if mascota.vacuna_m %}Sí{% else %}No{% endif %}<br>
+                <strong>Tipo:</strong> {{ mascota.tipo_m }}<br>
+                <strong>Género:</strong> {{ mascota.genero_m }}<br>
+                <strong>Fecha de Nacimiento:</strong> {{ mascota.fecha_nac_m }}<br>
+                <strong>Tamaño:</strong> {{ mascota.tamaño_m }}<br>
+                <strong>Color:</strong> {{ mascota.color_m }}<br>
+                <strong>Comportamiento:</strong> {{ mascota.comportamiento_m }}<br>
+                <strong>Peso:</strong> {{ mascota.peso_m }}<br>
+                <strong>Especie:</strong> {{ mascota.especie_m }}<br>
 
                 <form method="post" action="{% url 'eliminar_mascota' mascota.id_mascotas %}" style="display:inline;">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                    <button type="submit" class="btn btn-danger btn-sm mt-2">Eliminar</button>
                 </form>
             </li>
         {% endfor %}
     </ul>
 
     <!-- Agrega un botón para ir a la página de ingreso de mascotas -->
-    <a href="{% url 'ingresar_mascota' %}" class="btn btn-primary">Ingresar Mascota</a>
+    <a href="{% url 'ingresar_mascota' %}" class="btn btn-primary mt-3">Ingresar Mascota</a>
+
+    <!-- Agrega los scripts de Bootstrap al final del body -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
