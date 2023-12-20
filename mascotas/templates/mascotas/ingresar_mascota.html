@@ -19,63 +19,7 @@
         {% endif %}
         <form method="post" action="{% url 'ingresar_mascota' %}" class="needs-validation" novalidate>
             {% csrf_token %}
-            <div class="form-row">
-                <div class="col-md-6 mb-3">
-                    <label for="nombre_m">Nombre:</label>
-                    <input type="text" name="nombre_m" class="form-control" required>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="raza_m">Raza:</label>
-                    <input type="text" name="raza_m" class="form-control" required>
-                </div>
-            </div>
-            <div class="form-check mb-3">
-                <input type="checkbox" name="vacuna_m" class="form-check-input" id="vacuna_m">
-                <label class="form-check-label" for="vacuna_m">¿Vacunada?</label>
-            </div>
-            <div class="form-row">
-                <div class="col-md-6 mb-3">
-                    <label for="tipo_m">Tipo:</label>
-                    <input type="text" name="tipo_m" class="form-control" required>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="genero_m">Género:</label>
-                    <select name="genero_m" class="form-control" required>
-                        <option value="Macho">Macho</option>
-                        <option value="Hembra">Hembra</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="col-md-6 mb-3">
-                    <label for="fecha_nac_m">Fecha de Nacimiento:</label>
-                    <input type="date" name="fecha_nac_m" class="form-control" required>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="tamaño_m">Tamaño:</label>
-                    <input type="text" name="tamaño_m" class="form-control" required>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="col-md-6 mb-3">
-                    <label for="color_m">Color:</label>
-                    <input type="text" name="color_m" class="form-control" required>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="comportamiento_m">Comportamiento:</label>
-                    <textarea name="comportamiento_m" class="form-control" required></textarea>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="col-md-6 mb-3">
-                    <label for="peso_m">Peso:</label>
-                    <input type="number" name="peso_m" class="form-control" required>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="especie_m">Especie:</label>
-                    <input type="text" name="especie_m" class="form-control" required>
-                </div>
-            </div>
+            {{ form.as_p }}
             <div class="form-group">
                 <input type="submit" value="Ingresar Mascota" class="btn btn-primary">
                 <a href="{% url 'listado_mascotas' %}" class="btn btn-secondary">Ver listado de mascotas</a>

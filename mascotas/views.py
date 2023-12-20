@@ -18,11 +18,10 @@ def ingresar_mascota(request):
         form = MascotaForm(request.POST)
         if form.is_valid():
             form.save()
-            # Agrega un mensaje de éxito
-            messages.success(request, 'La mascota fue ingresada correctamente.')
+            # Agrega un mensaje de éxito y redirige a la lista de mascotas
+            messages.success(request, 'Mascota ingresada correctamente.')
             return redirect('listado_mascotas')
     else:
         form = MascotaForm()
-        messages.success(request, 'La mascota no fue ingresada correctamente.')
 
     return render(request, 'mascotas/ingresar_mascota.html', {'form': form})
