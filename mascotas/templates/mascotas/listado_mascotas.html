@@ -10,7 +10,18 @@
     <ul>
         {% for mascota in mascotas %}
             <li>
-                {{ mascota.nombre }} - {{ mascota.descripcion }}
+                Nombre: {{ mascota.nombre_m }}<br>
+                Raza: {{ mascota.raza_m }}<br>
+                Vacunada: {% if mascota.vacuna_m %}Sí{% else %}No{% endif %}<br>
+                Tipo: {{ mascota.tipo_m }}<br>
+                Género: {{ mascota.genero_m }}<br>
+                Fecha de Nacimiento: {{ mascota.fecha_nac_m }}<br>
+                Tamaño: {{ mascota.tamaño_m }}<br>
+                Color: {{ mascota.color_m }}<br>
+                Comportamiento: {{ mascota.comportamiento_m }}<br>
+                Peso: {{ mascota.peso_m }}<br>
+                Especie: {{ mascota.especie_m }}<br>
+
                 <form method="post" action="{% url 'eliminar_mascota' mascota.id_mascotas %}" style="display:inline;">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
@@ -18,6 +29,8 @@
             </li>
         {% endfor %}
     </ul>
+
+    <!-- Agrega un botón para ir a la página de ingreso de mascotas -->
     <a href="{% url 'ingresar_mascota' %}" class="btn btn-primary">Ingresar Mascota</a>
 </body>
 </html>
