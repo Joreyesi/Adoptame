@@ -23,5 +23,6 @@ def ingresar_mascota(request):
             return redirect('listado_mascotas')
     else:
         form = MascotaForm()
+        messages.success(request, 'La mascota no fue ingresada correctamente.')
 
     return render(request, 'mascotas/ingresar_mascota.html', {'form': form})

@@ -8,7 +8,7 @@ class MascotaForm(forms.ModelForm):
         model = Mascota
         fields = '__all__'
         widgets = {
-            'fecha_nac_m': forms.TextInput(attrs={'type': 'date'}),
+            'fecha_nac_m': forms.DateInput(attrs={'type': 'date'}),
             # Puedes agregar más personalizaciones aquí según tus necesidades
         }
 
