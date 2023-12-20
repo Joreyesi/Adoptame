@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages  # Importa la clase messages
 from .forms import MascotaForm
-from .models import Mascota
+from .models import Mascota, Usuario
 
 
 # Create your views here.
@@ -17,9 +17,19 @@ def ingresar_mascota(request):
     if request.method == 'POST':
         form = MascotaForm(request.POST)
         if form.is_valid():
-            form.save()
-            # Agrega un mensaje de éxito y redirige a la lista de mascotas
-            messages.success(request, 'Mascota ingresada correctamente.')
+            # Crea un usuario ficticio o selecciona uno existente
+            usuario, created = Usuario.objects.get_or_create(
+                rut_usuario='usuario_ficticio',
+                defaults={'nombre_u': 'Usuario Ficticio', 'apellido_u': 'Ficticio'}
+            )
+            # Asigna el usuario a la mascota
+            mascota = form.save(commit=False)
+            mascota.rut_usuario = usuario
+            mascota.save()
+
+            # Puedes agregar un mensaje de éxito
+            messages.success(request, 'La mascota ha sido ingresada correctamente.')
+
             return redirect('listado_mascotas')
     else:
         form = MascotaForm()
