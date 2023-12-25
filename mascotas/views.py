@@ -69,4 +69,4 @@ def adoptar_mascota(request, mascota_id):
 
 def adoptar_mascota_lista(request):
     mascotas_adoptadas = MascotaAdoptada.objects.all()
-    return render(request, 'mascotas/adoptadas_list.html', {'mascotas_adoptadas': mascotas_adoptadas})
+    return render(request, 'mascotas/adoptar_mascota_lista.html', {'mascotas_adoptadas': mascotas_adoptadas})
