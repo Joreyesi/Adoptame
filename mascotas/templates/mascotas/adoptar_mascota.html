@@ -1,0 +1,30 @@
+<!-- mascotas/templates/mascotas/adoptar_mascota.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mascotas Adoptadas</title>
+    <!-- Agrega el enlace al CSS de Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="container mt-5">
+    <h1>Mascotas Adoptadas</h1>
+
+    {% if mascotas_adoptadas %}
+        <ul class="list-group">
+            {% for mascota in mascotas_adoptadas %}
+                <li class="list-group-item">{{ mascota.nombre_m }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay mascotas adoptadas.</p>
+    {% endif %}
+
+    <a href="{% url 'listado_mascotas' %}" class="btn btn-primary mt-3">Volver al Listado</a>
+
+    <!-- Agrega los scripts de Bootstrap al final del body -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

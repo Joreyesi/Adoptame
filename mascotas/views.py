@@ -45,3 +45,16 @@ def eliminar_mascota(request, mascota_id):
     mascota = get_object_or_404(Mascota, id_mascotas=mascota_id)
     mascota.delete()
     return redirect('listado_mascotas')
+
+
+
+def adoptar_mascota(request, mascota_id):
+    mascota = get_object_or_404(Mascota, id_mascotas=mascota_id)
+    
+    # Aquí puedes realizar acciones específicas al adoptar, por ejemplo, cambiar el estado de adopción de la mascota.
+    
+    # Obtén la lista de todas las mascotas adoptadas
+    mascotas_adoptadas = Mascota.objects.filter(estado_adopcion=True)
+    
+    # Puedes pasar la lista de mascotas adoptadas a la plantilla
+    return render(request, 'mascotas/adoptar_mascota.html', {'mascotas_adoptadas': mascotas_adoptadas})
