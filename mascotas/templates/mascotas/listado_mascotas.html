@@ -24,6 +24,11 @@
                 <strong>Peso:</strong> {{ mascota.peso_m }}<br>
                 <strong>Especie:</strong> {{ mascota.especie_m }}<br>
 
+                <!-- Mostrar la imagen si existe -->
+                {% if mascota.imagen %}
+                    <img src="{{ mascota.imagen }}" alt="Imagen de {{ mascota.nombre_m }}" class="img-thumbnail">
+                {% endif %}
+
                 <form method="post" action="{% url 'eliminar_mascota' mascota.id_mascotas %}" style="display:inline;">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-danger btn-sm mt-2">Eliminar</button>
