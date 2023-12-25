@@ -27,6 +27,18 @@ class Mascota(models.Model):
         return self.nombre_m
     
 
+class MascotaAdoptada(models.Model):
+    id_adoptada = models.AutoField(primary_key=True)
+    mascota = models.OneToOneField(Mascota, related_name='adoptada', on_delete=models.CASCADE)
+    fecha_adopcion = models.DateField()
+
+    class Meta:
+        app_label = 'mascotas'
+
+    def __str__(self):
+        return f"{self.mascota.nombre_m} - Adoptada el {self.fecha_adopcion}"
+    
+
 class Usuario(AbstractUser):
     rut_usuario = models.CharField(max_length=12, primary_key=True)
     nombre_u = models.CharField(max_length=100)

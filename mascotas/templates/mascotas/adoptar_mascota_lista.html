@@ -1,0 +1,26 @@
+<!-- En tu archivo adoptadas_list.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Mascotas Adoptadas</title>
+    <!-- Agrega el enlace al CSS de Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="container mt-5">
+    <h1>Listado de Mascotas Adoptadas</h1>
+    <ul class="list-group">
+        {% for mascota_adoptada in mascotas_adoptadas %}
+            <li class="list-group-item">
+                <strong>Nombre de la mascota:</strong> {{ mascota_adoptada.mascota.nombre_m }}<br>
+                <strong>Fecha de adopción:</strong> {{ mascota_adoptada.fecha_adopcion }}<br>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <!-- Agrega los scripts de Bootstrap al final del body -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

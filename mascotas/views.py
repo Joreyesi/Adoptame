@@ -1,8 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages  # Importa la clase messages
 from .forms import MascotaForm
-from .models import Mascota, Usuario
+from .models import Mascota, Usuario, MascotaAdoptada
 from datetime import datetime
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from datetime import date
+
 
 
 # Create your views here.
@@ -50,11 +54,19 @@ def eliminar_mascota(request, mascota_id):
 
 def adoptar_mascota(request, mascota_id):
     mascota = get_object_or_404(Mascota, id_mascotas=mascota_id)
-    
-    # Aquí puedes realizar acciones específicas al adoptar, por ejemplo, cambiar el estado de adopción de la mascota.
-    
-    # Obtén la lista de todas las mascotas adoptadas
-    mascotas_adoptadas = Mascota.objects.filter(estado_adopcion=True)
-    
-    # Puedes pasar la lista de mascotas adoptadas a la plantilla
-    return render(request, 'mascotas/adoptar_mascota.html', {'mascotas_adoptadas': mascotas_adoptadas})
+
+    # Verifica si la mascota no ha sido adoptada previamente
+    if not hasattr(mascota, 'adoptada'):
+        # Crea una instancia de MascotaAdoptada
+        mascota_adoptada = MascotaAdoptada.objects.create(
+            mascota=mascota,
+            fecha_adopcion=date.today()
+        )
+        # Redirige a la página de listado de mascotas adoptadas
+        return HttpResponseRedirect(reverse('mascotas:adoptadas_list'))
+
+
+
+def adoptar_mascota_lista(request):
+    mascotas_adoptadas = MascotaAdoptada.objects.all()
+    return render(request, 'mascotas/adoptadas_list.html', {'mascotas_adoptadas': mascotas_adoptadas})
