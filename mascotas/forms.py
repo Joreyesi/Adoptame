@@ -9,6 +9,10 @@ class MascotaForm(forms.ModelForm):
         exclude = ['rut_usuario']
         widgets = {
             'fecha_nac_m': forms.TextInput(attrs={'type': 'date'}),
-            # Puedes agregar más personalizaciones aquí según tus necesidades
         }
 
+    # Agrega este método para manejar el campo de imagen
+    def __init__(self, *args, **kwargs):
+        super(MascotaForm, self).__init__(*args, **kwargs)
+        self.fields['imagen'].required = False  # Permite que la imagen sea opcional
+        self.fields['imagen'].widget.attrs['accept'] = 'image/*'  # Acepta cualquier tipo de imagen
