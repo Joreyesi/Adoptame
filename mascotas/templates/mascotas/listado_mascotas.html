@@ -12,8 +12,7 @@
     <ul class="list-group">
         {% for mascota in mascotas %}
             <li class="list-group-item">
-                <!-- Botón Adoptar -->
-                <a href="{% url 'adoptar_mascota' mascota.id_mascotas %}" class="btn btn-success btn-sm mt-2">Adoptar</a>
+
 
                 <!-- Información de la mascota -->
                 <strong>Nombre:</strong> {{ mascota.nombre_m }}<br>
@@ -32,6 +31,9 @@
                 {% if mascota.imagen %}
                 <img src="{{ mascota.imagen.url }}" alt="Imagen de {{ mascota.nombre_m }}" class="img-thumbnail">
                 {% endif %}
+
+                <!-- Botón Adoptar -->
+                <a href="{% url 'adoptar_mascota' mascota.id_mascotas %}" class="btn btn-success btn-sm mt-2">Adoptar</a>
 
                 <!-- Botón Eliminar -->
                 <form method="post" action="{% url 'eliminar_mascota' mascota.id_mascotas %}" style="display:inline;">
