@@ -7,6 +7,9 @@
     <!-- Agrega el enlace al CSS de Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
+    <!-- Agrega un botón para ir a la página de ingreso de mascotas -->
+    <a href="{% url 'ingresar_mascota' %}" class="btn btn-primary mt-3">Ingresar Mascota</a>
+
 <body class="container mt-5">
     <h1>Listado de Animales en Adopción</h1>
     <ul class="list-group">
@@ -44,8 +47,7 @@
         {% endfor %}
     </ul>
 
-    <!-- Agrega un botón para ir a la página de ingreso de mascotas -->
-    <a href="{% url 'ingresar_mascota' %}" class="btn btn-primary mt-3">Ingresar Mascota</a>
+
 
     <!-- Agrega los scripts de Bootstrap al final del body -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
