@@ -24,3 +24,4 @@ class MascotaForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
+    
