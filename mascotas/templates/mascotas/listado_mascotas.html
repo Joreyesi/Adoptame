@@ -50,15 +50,6 @@
         {% endfor %}
     </ul>
 
-    <!-- Script para la Confirmación de Adopción -->
-    <script>
-        function confirmarAdopcion(idMascota) {
-            var respuesta = confirm("¿Está seguro de que desea adoptar esta mascota?");
-            if (respuesta) {
-                window.location.href = "{% url 'adoptar_mascota' %}" + idMascota;
-            }
-        }
-    </script>
 
 
     <!-- Agrega los scripts de Bootstrap al final del body -->
