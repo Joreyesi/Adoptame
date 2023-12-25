@@ -17,11 +17,7 @@ class MascotaForm(forms.ModelForm):
         self.fields['imagen'].required = False  # Permite que la imagen sea opcional
         self.fields['imagen'].widget.attrs['accept'] = 'image/*'  # Acepta cualquier tipo de imagen
 
-
     def save(self, commit=True):
-        instance = super(MascotaForm, self).save(commit=False)
-        # Haz cualquier procesamiento adicional aquí si es necesario
-        if commit:
-            instance.save()
+        instance = super(MascotaForm, self).save(commit=commit)
         return instance
     
