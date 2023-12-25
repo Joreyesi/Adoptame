@@ -18,7 +18,7 @@ class Mascota(models.Model):
     comportamiento_m = models.TextField()
     peso_m = models.FloatField()
     especie_m = models.CharField(max_length=50)
-    imagen = models.ImageField(upload_to='mascotas/uploads', blank=True, null=True)
+    imagen = models.ImageField(upload_to='mascotas/', blank=True, null=True)
 
     class Meta:
         app_label = 'mascotas'

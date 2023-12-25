@@ -42,6 +42,8 @@ def ingresar_mascota(request):
     return render(request, 'mascotas/ingresar_mascota.html', {'form': form})
 
 
+
+
 def eliminar_mascota(request, mascota_id):
     mascota = get_object_or_404(Mascota, id_mascotas=mascota_id)
     mascota.delete()
