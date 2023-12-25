@@ -12,6 +12,10 @@
     <ul class="list-group">
         {% for mascota in mascotas %}
             <li class="list-group-item">
+                <!-- Botón Adoptar -->
+                <a href="{% url 'adoptar_mascota' mascota.id_mascotas %}" class="btn btn-success btn-sm mt-2">Adoptar</a>
+
+                <!-- Información de la mascota -->
                 <strong>Nombre:</strong> {{ mascota.nombre_m }}<br>
                 <strong>Raza:</strong> {{ mascota.raza_m }}<br>
                 <strong>Vacunada:</strong> {% if mascota.vacuna_m %}Sí{% else %}No{% endif %}<br>
@@ -29,6 +33,7 @@
                 <img src="{{ mascota.imagen.url }}" alt="Imagen de {{ mascota.nombre_m }}" class="img-thumbnail">
                 {% endif %}
 
+                <!-- Botón Eliminar -->
                 <form method="post" action="{% url 'eliminar_mascota' mascota.id_mascotas %}" style="display:inline;">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-danger btn-sm mt-2">Eliminar</button>
