@@ -32,7 +32,7 @@ MIDDLEWARE = [
 ]
 
 # Configuración de URLs
-ROOT_URLCONF = 'Adoptame.urls'  # Reemplaza 'Adoptame' con el nombre real de tu aplicación
+ROOT_URLCONF = 'mascotas.urls'  # Reemplaza 'Adoptame' con el nombre real de tu aplicación
 
 # Plantillas
 TEMPLATES = [
