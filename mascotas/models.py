@@ -5,7 +5,7 @@ import datetime
 # Create your models here.
 class Mascota(models.Model):
     id_mascotas = models.AutoField(primary_key=True)
-    rut_usuario = models.ForeignKey('mascotas.Usuario', related_name='mascotas', on_delete=models.CASCADE)  # Asegúrate de reemplazar 'TuApp' con el nombre real de tu aplicación.
+    rut_usuario = models.ForeignKey('mascotas.Usuario', related_name='mascotas', on_delete=models.CASCADE)
     nombre_m = models.CharField(max_length=100)
     raza_m = models.CharField(max_length=100)
     vacuna_m = models.BooleanField(default=False)
@@ -17,6 +17,8 @@ class Mascota(models.Model):
     comportamiento_m = models.TextField()
     peso_m = models.FloatField()
     especie_m = models.CharField(max_length=50)
+    imagen = models.ImageField(upload_to='mascotas/', blank=True, null=True)  # Nuevo campo para la imagen
+
     class Meta:
         app_label = 'mascotas'
 
