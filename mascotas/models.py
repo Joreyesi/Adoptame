@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, Group, Permission
+from django.contrib.auth.models import AbstractUser, Group, Permission, datetime
 
 
 # Create your models here.
@@ -29,7 +29,7 @@ class Usuario(AbstractUser):
     nombre_u = models.CharField(max_length=100)
     apellido_u = models.CharField(max_length=100)
     genero_u = models.CharField(max_length=10)
-    fecha_nac_u = models.DateField()
+    fecha_nac_u = models.DateField(default=datetime.date.today)
     id_u = models.CharField(max_length=20, unique=True)
     contraseña_u = models.CharField(max_length=100)  # Considera utilizar un campo más seguro para contraseñas en un entorno de producción.
     telefono_u = models.CharField(max_length=15)
