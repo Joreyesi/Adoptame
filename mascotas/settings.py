@@ -64,8 +64,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # Configuración de archivos multimedia
-MEDIA_URL = '/mascotas/media/mascotas/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'mascotas', 'media', 'mascotas')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'mascotas', 'media')
 
 
 
