@@ -16,23 +16,20 @@ def listado_mascotas(request):
 
 def ingresar_mascota(request):
     if request.method == 'POST':
-        form = MascotaForm(request.POST)
+        form = MascotaForm(request.POST, request.FILES)  # Asegúrate de incluir request.FILES
         if form.is_valid():
-            # Crea un usuario ficticio o selecciona uno existente
             usuario, created = Usuario.objects.get_or_create(
                 rut_usuario='usuario_ficticio',
                 defaults={
                     'nombre_u': 'Usuario Ficticio',
                     'apellido_u': 'Ficticio',
-                    'fecha_nac_u': datetime.now()  # Agrega la fecha de nacimiento actual o proporciona la fecha correcta
+                    'fecha_nac_u': datetime.now()
                 }
             )
-            # Asigna el usuario a la mascota
             mascota = form.save(commit=False)
             mascota.rut_usuario = usuario
             mascota.save()
 
-            # Puedes agregar un mensaje de éxito
             messages.success(request, 'La mascota ha sido ingresada correctamente.')
 
             return redirect('listado_mascotas')
