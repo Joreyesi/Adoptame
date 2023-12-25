@@ -1,6 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, Group, Permission, datetime
-
+from django.contrib.auth.models import AbstractUser, Group, Permission
+import datetime
 
 # Create your models here.
 class Mascota(models.Model):
