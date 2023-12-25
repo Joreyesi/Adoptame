@@ -7,14 +7,16 @@
     <!-- Agrega el enlace al CSS de Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
+
+<body class="container mt-5">
+    <h1>Listado de Animales en Adopción</h1>
+
     <!-- Agrega un botón para ir a la página de ingreso de mascotas -->
     <a href="{% url 'ingresar_mascota' %}" class="btn btn-primary mt-3">Ingresar Mascota</a>
 
     <!-- Agrega un botón para ir a la página de lista de mascotas adoptadas -->
     <a href="{% url 'adoptar_mascota_lista' %}" class="btn btn-primary mt-3">Lista Mascotas Adoptadas</a>
-
-<body class="container mt-5">
-    <h1>Listado de Animales en Adopción</h1>
+    
     <ul class="list-group">
         {% for mascota in mascotas %}
             <li class="list-group-item">
