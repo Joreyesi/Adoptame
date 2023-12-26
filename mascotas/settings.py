@@ -17,7 +17,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'mascotas.apps.MascotasConfig',  # Reemplaza 'Adoptame' con el nombre real de tu aplicación
+    'mascotas.apps.MascotasConfig',
+    'bootstrap_datepicker_plus',  # Reemplaza 'Adoptame' con el nombre real de tu aplicación
 ]
 
 # Middlewares
