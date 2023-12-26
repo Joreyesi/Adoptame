@@ -6,7 +6,7 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('mascotas/', include('mascotas.urls', namespace='mascotas')),  # Incluye las URLs de tu aplicación 'mascotas'
+    path('mascotas/', include('mascotas.urls')),  # Incluye las URLs de tu aplicación 'mascotas'
 ]
 
 # Configuración para servir archivos multimedia durante el desarrollo
