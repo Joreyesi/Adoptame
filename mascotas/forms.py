@@ -3,7 +3,6 @@
 from django import forms
 from .models import Mascota
 from datetime import date
-from bootstrap_datepicker_plus import DatePickerInput
 
 
 class MascotaForm(forms.ModelForm):
