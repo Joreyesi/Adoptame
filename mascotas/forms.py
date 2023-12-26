@@ -1,6 +1,7 @@
 # mascotas/forms.py
 
 from django import forms
+from django.forms import SelectDateWidget
 from .models import Mascota
 
 class MascotaForm(forms.ModelForm):
@@ -8,7 +9,7 @@ class MascotaForm(forms.ModelForm):
         model = Mascota
         exclude = ['rut_usuario']
         widgets = {
-            'fecha_nac_m': forms.TextInput(attrs={'type': 'date'}),
+            'fecha_nac_m': SelectDateWidget(years=range(2000, 'today'))
         }
 
     # Agrega este método para manejar el campo de imagen
