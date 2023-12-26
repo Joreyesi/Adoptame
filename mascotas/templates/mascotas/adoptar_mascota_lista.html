@@ -20,6 +20,8 @@
         {% for mascota_adoptada in mascotas_adoptadas %}
             <li class="list-group-item">
                 <strong>Nombre de la mascota:</strong> {{ mascota_adoptada.mascota.nombre_m }}<br>
+                <strong>Raza de la mascota:</strong> {{ mascota_adoptada.mascota.raza_m }}<br>
+                <strong>Género de la mascota:</strong> {{ mascota_adoptada.mascota.genero_m }}<br>
                 <strong>Fecha de adopción:</strong> {{ mascota_adoptada.fecha_adopcion }}<br>
             </li>
         {% endfor %}
