@@ -64,7 +64,7 @@ def adoptar_mascota(request, mascota_id):
         )
 
         # Revertir la URL a través del nombre del espacio de nombres
-        url = reverse('mascotas:listado_mascotas')  # Cambia a tu nombre de URL real
+        url = reverse('mascotas:lista_mascotas_adoptadas')  # Cambia a tu nombre de URL real
         return redirect(url)
 
     # Retorna algo en el caso en que la mascota ya ha sido adoptada
