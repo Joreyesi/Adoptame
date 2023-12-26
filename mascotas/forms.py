@@ -12,14 +12,7 @@ class MascotaForm(forms.ModelForm):
         exclude = ['rut_usuario']
         today = date.today()
         widgets = {
-            'fecha_nac_m': DatePickerInput(options={
-                'format': 'YYYY-MM-DD',  # El formato que prefieras
-                'minDate': '2000-01-01',  # La fecha mínima permitida
-                'maxDate': today.strftime('%Y-%m-%d'),  # La fecha máxima permitida
-                'showClose': True,
-                'showClear': True,
-                'showTodayButton': True,
-            })
+            'fecha_nac_m': forms.TextInput(attrs={'type': 'date'}),
         }
 
     # Agrega este método para manejar el campo de imagen
