@@ -11,13 +11,14 @@ class CustomSelectDateWidget(SelectDateWidget):
     def get_context(self, name, value, attrs):
         context = super().get_context(name, value, attrs)
 
-        # Obtener los valores actuales para año, mes y día
-        year = context['widget']['year']
-        month = context['widget']['month']
-        day = context['widget']['day']
+        # Obtener los valores actuales para año, mes y día del campo 'value'
+        if value:
+            year, month, day = value.year, value.month, value.day
+        else:
+            year, month, day = None, None, None
 
         # Obtener el número máximo de días para el mes y año actual
-        max_days = calendar.monthrange(year, month)[1]
+        max_days = calendar.monthrange(year, month)[1] if year and month else 31
 
         # Ajustar la cantidad de días en el widget
         context['widget']['days'] = [
