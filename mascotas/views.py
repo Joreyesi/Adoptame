@@ -6,7 +6,7 @@ from datetime import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from datetime import date
-
+from django.http import HttpResponse
 
 
 # Create your views here.
@@ -62,9 +62,12 @@ def adoptar_mascota(request, mascota_id):
             mascota=mascota,
             fecha_adopcion=date.today()
         )
-    # Revertir la URL a través del nombre del espacio de nombres
+        # Revertir la URL a través del nombre del espacio de nombres
         url = reverse('mascotas:listado_mascotas')
         return redirect(url)
+
+    # Retorna algo en el caso en que la mascota ya ha sido adoptada
+    return HttpResponse("Esta mascota ya ha sido adoptada previamente.")
 
 
 
