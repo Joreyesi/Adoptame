@@ -3,13 +3,15 @@
 from django import forms
 from django.forms import SelectDateWidget
 from .models import Mascota
+from datetime import date
 
 class MascotaForm(forms.ModelForm):
     class Meta:
         model = Mascota
         exclude = ['rut_usuario']
+        today = date.today()
         widgets = {
-            'fecha_nac_m': SelectDateWidget(years=range(2000, 'today'))
+            'fecha_nac_m': SelectDateWidget(years=range(2000, today.year + 1))
         }
 
     # Agrega este método para manejar el campo de imagen
