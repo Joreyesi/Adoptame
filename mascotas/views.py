@@ -62,8 +62,9 @@ def adoptar_mascota(request, mascota_id):
             mascota=mascota,
             fecha_adopcion=date.today()
         )
-        # Redirige a la página de listado de mascotas adoptadas
-        return HttpResponseRedirect(reverse('mascotas:adoptadas_list'))
+    # Revertir la URL a través del nombre del espacio de nombres
+        url = reverse('mascotas:listado_mascotas')
+        return redirect(url)
 
 
 
