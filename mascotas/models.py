@@ -79,10 +79,7 @@ class SuperUsuario(AbstractUser):
     def __str__(self):
         return f"{self.nombre_su} {self.apellido_su}"
 
-class wawa(AbstractUser):
-    rut_superusuario = models.CharField(max_length=12, primary_key=True)
-    nombre_su = models.CharField(max_length=100)
-    apellido_su = models.CharField(max_length=100)
+
 
 class Organizacion(models.Model):
     id_org_o = models.AutoField(primary_key=True)
