@@ -1,7 +1,9 @@
+from pathlib import Path
+
 AUTH_USER_MODEL = 'mascotas.Usuario'
 import os
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 SECRET_KEY = 'tu_clave_secreta_generada_aleatoriamente'
 
