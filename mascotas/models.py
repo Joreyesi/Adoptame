@@ -54,8 +54,8 @@ class Usuario(AbstractUser):
     tipo_usuario_u = models.CharField(max_length=20)
     
     # Cambiar related_name para evitar conflictos con 'auth.User'
-    user_groups = models.ManyToManyField(Group, related_name='usuarios_related_groups', blank=True)
-    user_permissions = models.ManyToManyField(Permission, related_name='usuarios_related_permissions', blank=True)
+    user_groups = models.ManyToManyField(Group, nombre='usuarios_related_groups', blank=True)
+    user_permissions = models.ManyToManyField(Permission, nombre='usuarios_related_permissions', blank=True)
 
     def __str__(self):
         return f"{self.nombre_u} {self.apellido_u}"
@@ -73,8 +73,8 @@ class SuperUsuario(AbstractUser):
     tipo_usuario_su = models.CharField(max_length=20)
     
     # Cambiar related_name para evitar conflictos con 'auth.User'
-    superuser_groups = models.ManyToManyField(Group, related_name='superusuarios_related_groups', blank=True)
-    user_permissions_su = models.ManyToManyField(Permission, related_name='superusuarios_related_permissions', blank=True)
+    superuser_groups = models.ManyToManyField(Group, nombre='superusuarios_related_groups', blank=True)
+    user_permissions_su = models.ManyToManyField(Permission, nombre='superusuarios_related_permissions', blank=True)
 
     def __str__(self):
         return f"{self.nombre_su} {self.apellido_su}"
