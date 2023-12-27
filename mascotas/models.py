@@ -39,6 +39,8 @@ class MascotaAdoptada(models.Model):
         return f"{self.mascota.nombre_m} - Adoptada el {self.fecha_adopcion}"
     
 
+
+
 class Usuario(AbstractUser):
     rut_usuario = models.CharField(max_length=12, primary_key=True)
     nombre_u = models.CharField(max_length=100)
@@ -46,14 +48,14 @@ class Usuario(AbstractUser):
     genero_u = models.CharField(max_length=10)
     fecha_nac_u = models.DateField(default=datetime.date.today)
     id_u = models.CharField(max_length=20, unique=True)
-    contraseña_u = models.CharField(max_length=100)  # Considera utilizar un campo más seguro para contraseñas en un entorno de producción.
+    contraseña_u = models.CharField(max_length=128)  # Campo para contraseñas hash
     telefono_u = models.CharField(max_length=15)
     ciudad_u = models.CharField(max_length=100)
     tipo_usuario_u = models.CharField(max_length=20)
     
     # Cambiar related_name para evitar conflictos con 'auth.User'
-    user_groups = models.ManyToManyField(Group, related_name='usuarios_groups', blank=True)
-    user_permissions = models.ManyToManyField(Permission, related_name='usuarios_permissions', blank=True)
+    user_groups = models.ManyToManyField(Group, related_name='usuarios_related_groups', blank=True)
+    user_permissions = models.ManyToManyField(Permission, related_name='usuarios_related_permissions', blank=True)
 
     def __str__(self):
         return f"{self.nombre_u} {self.apellido_u}"
