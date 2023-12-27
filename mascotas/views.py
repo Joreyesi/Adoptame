@@ -8,10 +8,12 @@ from django.urls import reverse
 from datetime import date
 from django.http import HttpResponse
 import uuid
+from uuid import uuid4
 
 
-# Create your views here.
-# En tu archivo views.py
+
+def generar_id_u():
+    return str(uuid4())
 
 
 def listado_mascotas(request):
@@ -19,14 +21,14 @@ def listado_mascotas(request):
     return render(request, 'mascotas/listado_mascotas.html', {'mascotas': mascotas})
 
 
-import uuid
+
 
 def ingresar_mascota(request):
     if request.method == 'POST':
         form = MascotaForm(request.POST, request.FILES)
         if form.is_valid():
             usuario, created = Usuario.objects.get_or_create(
-                rut_usuario=str(uuid.uuid4()),  # Genera un nuevo UUID
+                rut_usuario=generar_id_u(),
                 defaults={
                     'nombre_u': 'Usuario Ficticio',
                     'apellido_u': 'Ficticio',
