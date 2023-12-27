@@ -3,7 +3,7 @@ from pathlib import Path
 AUTH_USER_MODEL = 'mascotas.Usuario'
 import os
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'tu_clave_secreta_generada_aleatoriamente'
 
