@@ -1,8 +1,9 @@
 from pathlib import Path
-
-AUTH_USER_MODEL = 'mascotas.Usuario'
 import os
 
+AUTH_USER_MODEL = 'mascotas.Usuario'
+
+# Nueva definición de BASE_DIR
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'tu_clave_secreta_generada_aleatoriamente'
@@ -11,7 +12,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# Aplicaciones instaladas
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -19,10 +19,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'mascotas.apps.MascotasConfig',  # Reemplaza 'Adoptame' con el nombre real de tu aplicación
+    'mascotas.apps.MascotasConfig',
 ]
 
-# Middlewares
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -33,14 +32,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# Configuración de URLs
-ROOT_URLCONF = 'mascotas.urls'  # Reemplaza 'Adoptame' con el nombre real de tu aplicación
+ROOT_URLCONF = 'mascotas.urls'
 
-# Plantillas
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'mascotas', 'templates')],  # Ajusta la ruta según la estructura de tu proyecto
+        'DIRS': [os.path.join(BASE_DIR, 'mascotas', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -53,7 +50,7 @@ TEMPLATES = [
     },
 ]
 
-# Configuración de la base de datos (puedes cambiar a tu preferencia, por ejemplo, usar PostgreSQL)
+# Configuración de la base de datos
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -63,11 +60,12 @@ DATABASES = {
 
 # Configuración de archivos estáticos
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # Ajustado a la nueva definición de BASE_DIR
 
 # Configuración de archivos multimedia
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'mascotas', 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'mascotas', 'media')  # Ajustado a la nueva definición de BASE_DIR
+
 
 
 
