@@ -73,7 +73,7 @@ class SuperUsuario(AbstractUser):
     tipo_usuario_su = models.CharField(max_length=20)
     
     # Cambiar related_name para evitar conflictos con 'auth.User'
-    user_groups_su = models.ManyToManyField(Group, related_name='superusuarios_related_groups', blank=True)
+    superuser_groups = models.ManyToManyField(Group, related_name='superusuarios_related_groups', blank=True)
     user_permissions_su = models.ManyToManyField(Permission, related_name='superusuarios_related_permissions', blank=True)
 
     def __str__(self):
