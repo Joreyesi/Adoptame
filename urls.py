@@ -9,7 +9,7 @@ from django.conf.urls import url
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    path('mascotas/', include('mascotas.urls', namespace='mascotas')),
+    path('mascotas/', include('mascotas.urls')),
 ]
 
 # Configuración para servir archivos multimedia durante el desarrollo
