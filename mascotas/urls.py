@@ -3,6 +3,8 @@ from django.urls import path
 from . import views
 from .views import registrar_usuario, registrar_superusuario
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 
@@ -16,3 +18,5 @@ urlpatterns = [
     path('user_login/', registrar_usuario, name='user_login'),
     path('admin_login/', registrar_superusuario, name='admin_login'),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
