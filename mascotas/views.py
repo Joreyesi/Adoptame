@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from datetime import date
 from django.http import HttpResponse
+import uuid
 
 
 # Create your views here.
@@ -18,12 +19,14 @@ def listado_mascotas(request):
     return render(request, 'mascotas/listado_mascotas.html', {'mascotas': mascotas})
 
 
+import uuid
+
 def ingresar_mascota(request):
     if request.method == 'POST':
-        form = MascotaForm(request.POST, request.FILES)  # Asegúrate de incluir request.FILES
+        form = MascotaForm(request.POST, request.FILES)
         if form.is_valid():
             usuario, created = Usuario.objects.get_or_create(
-                rut_usuario='usuario_ficticio',
+                rut_usuario=str(uuid.uuid4()),  # Genera un nuevo UUID
                 defaults={
                     'nombre_u': 'Usuario Ficticio',
                     'apellido_u': 'Ficticio',
@@ -41,6 +44,7 @@ def ingresar_mascota(request):
         form = MascotaForm()
 
     return render(request, 'mascotas/ingresar_mascota.html', {'form': form})
+
 
 
 
