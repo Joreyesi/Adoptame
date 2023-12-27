@@ -8,7 +8,7 @@ from django.conf.urls import url
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('Admin/', admin.site.urls),
     path('mascotas/', include('mascotas.urls')),
 ]
 
