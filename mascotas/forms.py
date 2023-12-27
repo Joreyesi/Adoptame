@@ -1,8 +1,7 @@
-# mascotas/forms.py
-
 from django import forms
-from .models import Mascota
+from .models import Mascota, Usuario, SuperUsuario
 from datetime import date
+from django.contrib.auth.forms import AuthenticationForm
 
 
 class MascotaForm(forms.ModelForm):
@@ -24,3 +23,13 @@ class MascotaForm(forms.ModelForm):
         instance = super(MascotaForm, self).save(commit=commit)
         return instance
     
+
+class UsuarioForm(forms.ModelForm):
+    class Meta:
+        model = Usuario
+        fields = '__all__'
+
+class SuperUsuarioForm(forms.ModelForm):
+    class Meta:
+        model = SuperUsuario
+        fields = '__all__'

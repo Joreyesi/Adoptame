@@ -1,6 +1,7 @@
 # mascotas/urls.py
 from django.urls import path
 from . import views
+from .views import UserLoginView, AdminLoginView
 from django.contrib import admin
 
 
@@ -12,4 +13,6 @@ urlpatterns = [
     path('eliminar_mascota/<int:mascota_id>/', views.eliminar_mascota, name='eliminar_mascota'),
     path('adoptar_mascota/<int:mascota_id>/', views.adoptar_mascota, name='adoptar_mascota'),
     path('adoptar_mascota_lista/', views.adoptar_mascota_lista, name='adoptar_mascota_lista'),
+    path('user_login/', UserLoginView.as_view(), name='user_login'),
+    path('admin_login/', AdminLoginView.as_view(), name='admin_login'),
 ]

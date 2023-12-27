@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .forms import MascotaForm
-from .models import Mascota, Usuario, MascotaAdoptada
+from django.contrib.auth.views import LoginView
+from .forms import MascotaForm, UsuarioForm, SuperUsuarioForm
+from .models import Mascota, Usuario, MascotaAdoptada, SuperUsuario
 from datetime import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -10,6 +11,32 @@ from django.http import HttpResponse
 import uuid
 from uuid import uuid4
 
+
+
+
+def registrar_usuario(request):
+    if request.method == 'POST':
+        form = UsuarioForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # Resto de la lógica después de guardar el usuario
+            return redirect('pagina_de_inicio')
+    else:
+        form = UsuarioForm()
+    
+    return render(request, 'registrar_usuario.html', {'form': form})
+
+def registrar_superusuario(request):
+    if request.method == 'POST':
+        form = SuperUsuarioForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # Resto de la lógica después de guardar el superusuario
+            return redirect('pagina_de_inicio')
+    else:
+        form = SuperUsuarioForm()
+    
+    return render(request, 'registrar_superusuario.html', {'form': form})
 
 
 def generar_id_u():

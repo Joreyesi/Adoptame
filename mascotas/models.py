@@ -59,7 +59,27 @@ class Usuario(AbstractUser):
 
     def __str__(self):
         return f"{self.nombre_u} {self.apellido_u}"
+
+class SuperUsuario(AbstractUser):
+    rut_superusuario = models.CharField(max_length=12, primary_key=True)
+    nombre_su = models.CharField(max_length=100)
+    apellido_su = models.CharField(max_length=100)
+    genero_su = models.CharField(max_length=10)
+    fecha_nac_su = models.DateField(default=datetime.date.today)
+    id_su = models.CharField(max_length=20, unique=True, null=True, blank=True)
+    contraseña_su = models.CharField(max_length=128)  # Campo para contraseñas hash
+    telefono_su = models.CharField(max_length=15)
+    ciudad_su = models.CharField(max_length=100)
+    tipo_usuario_su = models.CharField(max_length=20)
     
+    # Cambiar related_name para evitar conflictos con 'auth.User'
+    user_groups_su = models.ManyToManyField(Group, related_name='superusuarios_related_groups', blank=True)
+    user_permissions_su = models.ManyToManyField(Permission, related_name='superusuarios_related_permissions', blank=True)
+
+    def __str__(self):
+        return f"{self.nombre_su} {self.apellido_su}"
+
+
 
 class Organizacion(models.Model):
     id_org_o = models.AutoField(primary_key=True)

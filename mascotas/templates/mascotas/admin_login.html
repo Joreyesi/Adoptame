@@ -1,0 +1,8 @@
+<!-- registrar_superusuario.html -->
+
+<form method="post" action="{% url 'registrar_superusuario' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Registrar Superusuario</button>
+  </form>
+  
