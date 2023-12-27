@@ -27,18 +27,16 @@ def ingresar_mascota(request):
     if request.method == 'POST':
         form = MascotaForm(request.POST, request.FILES)
         if form.is_valid():
-            try:
-                # Intenta obtener el usuario existente
-                usuario = Usuario.objects.get(rut_usuario=generar_id_u())
-            except Usuario.DoesNotExist:
-                # Si no existe, crea uno nuevo
-                usuario = Usuario.objects.create(
-                    rut_usuario=generar_id_u(),
-                    nombre_u='Usuario Ficticio',
-                    apellido_u='Ficticio',
-                    fecha_nac_u=datetime.now()
-                )
-
+            rut_usuario = generar_id_u()  # Usa la función generar_id_u
+            usuario, created = Usuario.objects.get_or_create(
+                rut_usuario=rut_usuario,
+                defaults={
+                    'nombre_u': 'Usuario Ficticio',
+                    'apellido_u': 'Ficticio',
+                    'fecha_nac_u': datetime.now(),
+                    'id_u': rut_usuario  # Asigna el valor de rut_usuario a id_u
+                }
+            )
             mascota = form.save(commit=False)
             mascota.rut_usuario = usuario
             mascota.save()

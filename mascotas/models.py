@@ -47,7 +47,7 @@ class Usuario(AbstractUser):
     apellido_u = models.CharField(max_length=100)
     genero_u = models.CharField(max_length=10)
     fecha_nac_u = models.DateField(default=datetime.date.today)
-    id_u = models.CharField(max_length=20, unique=True)
+    id_u = models.CharField(max_length=20, unique=True, null=True, blank=True)
     contraseña_u = models.CharField(max_length=128)  # Campo para contraseñas hash
     telefono_u = models.CharField(max_length=15)
     ciudad_u = models.CharField(max_length=100)
