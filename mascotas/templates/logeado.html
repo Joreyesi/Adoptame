@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuario Logeado</title>
+</head>
+<body>
+
+    <h1>Bienvenido, {{ user.username }}</h1>
+
+    <!-- Agrega el botón para redirigir a listado_mascotas.html -->
+    <a href="{% url 'listado_mascotas' %}">Ir a Listado de Mascotas</a>
+
+</body>
+</html>

@@ -54,17 +54,24 @@ def user_login(request):
     if request.method == 'POST':
         id_u = request.POST['id_u']
         contraseña_u = request.POST['contraseña_u']
+        next_url = request.POST.get('next', '')  # Obtén la URL de redirección desde el formulario
+
         user = authenticate(request, id_u=id_u, contraseña_u=contraseña_u)
 
         if user is not None:
             login(request, user)
-            return redirect('listado_mascotas')  # Redirige a la página deseada después del inicio de sesión
+
+            # Redirige al usuario a la URL de redirección o a una página predeterminada
+            return redirect(next_url or 'listado_mascotas')
+
         else:
             # Manejar el caso en el que la autenticación falla
             return render(request, 'login.html', {'error_message': 'Usuario o contraseña incorrectos'})
 
     return render(request, 'login.html')  # Renderiza el formulario de inicio de sesión
 
+def logeado(request):
+    return render(request, 'logeado.html')
 
 
 
@@ -81,8 +88,11 @@ def generar_id_u():
 
 
 def listado_mascotas(request):
-    mascotas = Mascota.objects.all()
-    return render(request, 'mascotas/listado_mascotas.html', {'mascotas': mascotas})
+    es_admin = request.user.is_staff  # Verifica si el usuario es administrador
+    print(es_admin)
+    mascotas = Mascota.objects.all()  # Reemplaza TuModeloDeMascotas con el nombre real de tu modelo
+
+    return render(request, 'listado_mascotas.html', {'mascotas': mascotas, 'es_admin': es_admin})
 
 
 

@@ -12,9 +12,24 @@
     {% if user.is_authenticated %}
         {# Si el usuario ya está autenticado, muestra un saludo y un enlace para cerrar sesión #}
         <p>Hola, {{ user.username }}. <a href="{% url 'logout' %}">Cerrar sesión</a></p>
+
+        {% if user.is_staff %}
+            {# Si el usuario es admin, muestra botones adicionales #}
+            <p>¿Eres un administrador?</p>
+            <a href="{% url 'ingresar_mascota' %}">Ingresar Mascota</a>
+            <br>
+            <a href="{% url 'adoptar_mascota_lista' %}">Ver Listado de Mascotas Adoptadas</a>
+        {% endif %}
     {% else %}
         {# Si el usuario no está autenticado, muestra un enlace para ir a la página de inicio de sesión #}
-        <p>¿Eres un usuario normal? <a href="{% url 'user_login' %}">Registrese</a></p>
+        <p>¿Eres un usuario normal? <a href="{% url 'login' %}">Iniciar sesión</a></p>
+
+        {# Formulario de inicio de sesión #}
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Iniciar sesión</button>
+        </form>
     {% endif %}
 
 </body>
