@@ -38,6 +38,10 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = Usuario
         fields = ('nombre_u', 'apellido_u', 'genero_u', 'fecha_nac_u', 'id_u', 'contraseña_u', 'telefono_u', 'ciudad_u')
+        today = date.today()
+        widgets = {
+            'fecha_nac_u': forms.TextInput(attrs={'type': 'date'}),
+        }
 
     def __init__(self, *args, **kwargs):
         super(CustomUserCreationForm, self).__init__(*args, **kwargs)
