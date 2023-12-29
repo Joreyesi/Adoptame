@@ -14,7 +14,7 @@
         <p>Hola, {{ user.username }}. <a href="{% url 'logout' %}">Cerrar sesión</a></p>
     {% else %}
         {# Si el usuario no está autenticado, muestra un enlace para ir a la página de inicio de sesión #}
-        <p>¿Eres un usuario normal? <a href="{% url 'user_login' %}">Inicia sesión aquí</a></p>
+        <p>¿Eres un usuario normal? <a href="{% url 'user_login' %}">Registrese</a></p>
     {% endif %}
 
 </body>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+</head>
+<body>
+
+    <h1>Iniciar Sesión</h1>
+
+    {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+
+    <form method="post" action="{% url 'user_login' %}">
+        {% csrf_token %}
+        <label for="id_u">ID Usuario:</label>
+        <input type="text" id="id_u" name="id_u" required><br>
+
+        <label for="contraseña_u">Contraseña:</label>
+        <input type="password" id="contraseña_u" name="contraseña_u" required><br>
+
+        <input type="submit" value="Iniciar Sesión">
+    </form>
+
+</body>
+</html>

@@ -2,6 +2,7 @@ from django import forms
 from .models import Mascota, Usuario, SuperUsuario
 from datetime import date
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.forms import DateInput
 
 
 class MascotaForm(forms.ModelForm):
@@ -24,38 +25,23 @@ class MascotaForm(forms.ModelForm):
         return instance
     
 
-class UsuarioForm(forms.ModelForm):
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
+class UsuarioCreationForm(UserCreationForm):
     class Meta:
         model = Usuario
-        fields = '__all__'
+        fields = ('rut_usuario','nombre_u', 'apellido_u', 'genero_u', 'fecha_nac_u', 'id_u', 'telefono_u', 'ciudad_u', 'password1', 'password2')
+        widgets = {
+            'fecha_nac_u': DateInput(),
+        }
 
 class SuperUsuarioForm(forms.ModelForm):
     class Meta:
         model = SuperUsuario
         fields = '__all__'
 
-class CustomUserCreationForm(UserCreationForm):
-    class Meta:
-        model = Usuario
-        fields = ('nombre_u', 'apellido_u', 'genero_u', 'fecha_nac_u', 'id_u', 'contraseña_u', 'telefono_u', 'ciudad_u')
-        today = date.today()
-        widgets = {
-            'fecha_nac_u': forms.TextInput(attrs={'type': 'date'}),
-        }
-
-    def __init__(self, *args, **kwargs):
-        super(CustomUserCreationForm, self).__init__(*args, **kwargs)
-        # Verifica que los campos existan antes de intentar eliminarlos
-        if 'is_staff' in self.fields:
-            del self.fields['is_staff']
-        if 'is_superuser' in self.fields:
-            del self.fields['is_superuser']
-        if 'groups' in self.fields:
-            del self.fields['groups']
-        if 'user_permissions' in self.fields:
-            del self.fields['user_permissions']
-        if 'last_login' in self.fields:
-            del self.fields['last_login']
-        if 'date_joined' in self.fields:
-            del self.fields['date_joined']
+class CustomUserCreationForm(UsuarioCreationForm):
+    class Meta(UsuarioCreationForm.Meta):
+        exclude = ('is_staff', 'is_superuser', 'groups', 'user_permissions', 'last_login', 'date_joined')
 

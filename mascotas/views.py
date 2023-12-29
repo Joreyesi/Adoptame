@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.views import LoginView
-from .forms import MascotaForm, UsuarioForm, SuperUsuarioForm, CustomUserCreationForm
+from .forms import MascotaForm, SuperUsuarioForm, CustomUserCreationForm
 from .models import Mascota, Usuario, MascotaAdoptada, SuperUsuario
 from datetime import datetime
 from django.http import HttpResponseRedirect
@@ -11,6 +11,7 @@ from django.http import HttpResponse
 import uuid
 from uuid import uuid4
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
 
 
 
@@ -30,7 +31,7 @@ def registrar_usuario(request):
         if form.is_valid():
             form.save()
             # Resto de la lógica después de guardar el usuario
-            return redirect('pagina_de_inicio')
+            return redirect('home')
     else:
         form = CustomUserCreationForm()
 
@@ -47,6 +48,32 @@ def registrar_superusuario(request):
         form = SuperUsuarioForm()
     
     return render(request, 'registrar_superusuario.html', {'form': form})
+
+
+def user_login(request):
+    if request.method == 'POST':
+        id_u = request.POST['id_u']
+        contraseña_u = request.POST['contraseña_u']
+        user = authenticate(request, id_u=id_u, contraseña_u=contraseña_u)
+
+        if user is not None:
+            login(request, user)
+            return redirect('listado_mascotas')  # Redirige a la página deseada después del inicio de sesión
+        else:
+            # Manejar el caso en el que la autenticación falla
+            return render(request, 'login.html', {'error_message': 'Usuario o contraseña incorrectos'})
+
+    return render(request, 'login.html')  # Renderiza el formulario de inicio de sesión
+
+
+
+
+
+
+
+
+
+
 
 
 def generar_id_u():
