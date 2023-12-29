@@ -1,7 +1,7 @@
 # mascotas/urls.py
 from django.urls import path
 from . import views
-from .views import registrar_usuario, registrar_superusuario
+from .views import registrar_usuario, registrar_superusuario, home, user_home
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
@@ -17,6 +17,8 @@ urlpatterns = [
     path('adoptar_mascota_lista/', views.adoptar_mascota_lista, name='adoptar_mascota_lista'),
     path('user_login/', registrar_usuario, name='user_login'),
     path('admin_login/', registrar_superusuario, name='admin_login'),
+    path('', home, name='home'),
+    path('user/home/', user_home, name='user_home'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

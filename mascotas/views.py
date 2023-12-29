@@ -10,7 +10,17 @@ from datetime import date
 from django.http import HttpResponse
 import uuid
 from uuid import uuid4
+from django.contrib.auth.decorators import login_required
 
+
+
+
+def home(request):
+    return render(request, 'home.html')
+
+@login_required(login_url='/user/login/')
+def user_home(request):
+    return render(request, 'user_home.html')
 
 
 
