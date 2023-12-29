@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.views import LoginView
-from .forms import MascotaForm, UsuarioForm, SuperUsuarioForm
+from .forms import MascotaForm, UsuarioForm, SuperUsuarioForm, CustomUserCreationForm
 from .models import Mascota, Usuario, MascotaAdoptada, SuperUsuario
 from datetime import datetime
 from django.http import HttpResponseRedirect
@@ -26,14 +26,14 @@ def user_home(request):
 
 def registrar_usuario(request):
     if request.method == 'POST':
-        form = UsuarioForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
             # Resto de la lógica después de guardar el usuario
             return redirect('pagina_de_inicio')
     else:
-        form = UsuarioForm()
-    
+        form = CustomUserCreationForm()
+
     return render(request, 'registrar_usuario.html', {'form': form})
 
 def registrar_superusuario(request):

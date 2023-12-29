@@ -1,7 +1,7 @@
 from django import forms
 from .models import Mascota, Usuario, SuperUsuario
 from datetime import date
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 
 class MascotaForm(forms.ModelForm):
@@ -33,3 +33,19 @@ class SuperUsuarioForm(forms.ModelForm):
     class Meta:
         model = SuperUsuario
         fields = '__all__'
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta:
+        model = Usuario
+        fields = ('nombre_u', 'apellido_u', 'genero_u', 'fecha_nac_u', 'id_u', 'contraseña_u', 'telefono_u', 'ciudad_u', 'tipo_usuario_u')
+
+    def __init__(self, *args, **kwargs):
+        super(CustomUserCreationForm, self).__init__(*args, **kwargs)
+        # Eliminar campos relacionados con el superusuario
+        del self.fields['is_staff']
+        del self.fields['is_superuser']
+        del self.fields['groups']
+        del self.fields['user_permissions']
+        del self.fields['last_login']
+        del self.fields['date_joined']
+
