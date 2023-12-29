@@ -75,7 +75,6 @@ class SuperUsuario(AbstractUser):
     contraseña_su = models.CharField(max_length=128)  # Campo para contraseñas hash
     telefono_su = models.CharField(max_length=15)
     ciudad_su = models.CharField(max_length=100)
-    tipo_usuario_su = models.CharField(max_length=20)
     
     # Cambiar related_name para evitar conflictos con 'auth.User'
     groups = models.ManyToManyField(Group, related_name='superusuarios_related_groups', blank=True)
