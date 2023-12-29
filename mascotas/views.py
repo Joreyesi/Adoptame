@@ -30,11 +30,11 @@ def registrar_usuario(request):
         if form.is_valid():
             form.save()
             # Resto de la lógica después de guardar el usuario
-            return redirect('pagina_de_inicio')
+            return redirect('home')
     else:
         form = UsuarioForm()
     
-    return render(request, 'registrar_usuario.html', {'form': form})
+    return render(request, 'user_login.html', {'form': form})
 
 def registrar_superusuario(request):
     if request.method == 'POST':
@@ -42,11 +42,11 @@ def registrar_superusuario(request):
         if form.is_valid():
             form.save()
             # Resto de la lógica después de guardar el superusuario
-            return redirect('pagina_de_inicio')
+            return redirect('home')
     else:
         form = SuperUsuarioForm()
     
-    return render(request, 'registrar_superusuario.html', {'form': form})
+    return render(request, 'admin_login.html', {'form': form})
 
 
 def generar_id_u():
