@@ -41,11 +41,17 @@ class CustomUserCreationForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super(CustomUserCreationForm, self).__init__(*args, **kwargs)
-        # Eliminar campos relacionados con el superusuario
-        del self.fields['is_staff']
-        del self.fields['is_superuser']
-        del self.fields['groups']
-        del self.fields['user_permissions']
-        del self.fields['last_login']
-        del self.fields['date_joined']
+        # Verifica que los campos existan antes de intentar eliminarlos
+        if 'is_staff' in self.fields:
+            del self.fields['is_staff']
+        if 'is_superuser' in self.fields:
+            del self.fields['is_superuser']
+        if 'groups' in self.fields:
+            del self.fields['groups']
+        if 'user_permissions' in self.fields:
+            del self.fields['user_permissions']
+        if 'last_login' in self.fields:
+            del self.fields['last_login']
+        if 'date_joined' in self.fields:
+            del self.fields['date_joined']
 
