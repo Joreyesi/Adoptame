@@ -7,10 +7,16 @@
 </head>
 <body>
 
-    <h1>Bienvenido, {{ user.nombre_u }} {{ user.username }}</h1>
+    {% if user.is_authenticated %}
+    <h1>Bienvenido, {{ user.nombre_u }}</h1>
+    <h1>Bienvenido, {{ user.username }}</h1>
+    <h1>Bienvenido, {{ user.id_u }}</h1>
 
     <!-- Agrega el botón para redirigir a listado_mascotas.html -->
     <a href="{% url 'listado_mascotas' %}">Ir a Listado de Mascotas</a>
+{% else %}
+    <p>Usuario no autenticado</p>
+{% endif %}
 
 </body>
 </html>

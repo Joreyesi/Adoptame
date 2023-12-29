@@ -12,6 +12,7 @@ import uuid
 from uuid import uuid4
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
+from django.db import IntegrityError
 
 
 
@@ -29,9 +30,16 @@ def registrar_usuario(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            # Resto de la lógica después de guardar el usuario
-            return redirect('home')
+            id_u = form.cleaned_data['id_u']
+
+            try:
+                # Intenta guardar el usuario
+                form.save()
+                # Resto de la lógica después de guardar el usuario
+                return redirect('home')
+            except IntegrityError:
+                # Si hay una violación de la restricción única, el nombre de usuario ya existe
+                form.add_error('id_u', 'Este nombre de usuario ya está en uso.')
     else:
         form = CustomUserCreationForm()
 
@@ -54,7 +62,7 @@ def user_login(request):
     if request.method == 'POST':
         id_u = request.POST['id_u']
         contraseña_u = request.POST['contraseña_u']
-        user = authenticate(request, id_u=id_u, contraseña_u=contraseña_u)
+        user = authenticate(request, username=id_u, password=contraseña_u)
 
         if user is not None:
             login(request, user)

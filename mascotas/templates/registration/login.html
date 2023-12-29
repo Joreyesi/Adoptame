@@ -17,13 +17,14 @@
         {% csrf_token %}
         <label for="id_u">ID Usuario:</label>
         <input type="text" id="id_u" name="id_u" required><br>
-
+    
         <label for="contraseña_u">Contraseña:</label>
         <input type="password" id="contraseña_u" name="contraseña_u" required><br>
         <input type="hidden" name="next" value="{{ request.GET.next }}">
-
+    
         <input type="submit" value="Iniciar Sesión">
     </form>
+    
 
 </body>
 </html>

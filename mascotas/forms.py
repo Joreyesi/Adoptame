@@ -31,7 +31,7 @@ class DateInput(forms.DateInput):
 class UsuarioCreationForm(UserCreationForm):
     class Meta:
         model = Usuario
-        fields = ('rut_usuario','nombre_u', 'apellido_u', 'genero_u', 'fecha_nac_u', 'id_u', 'telefono_u', 'ciudad_u', 'password1', 'password2')
+        fields = ('rut_usuario','nombre_u', 'apellido_u', 'genero_u', 'fecha_nac_u', 'id_u', 'password1', 'password2','telefono_u', 'ciudad_u')
         widgets = {
             'fecha_nac_u': DateInput(),
         }

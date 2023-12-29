@@ -22,7 +22,7 @@
         {% endif %}
     {% else %}
         {# Si el usuario no está autenticado, muestra un enlace para ir a la página de inicio de sesión #}
-        <p>¿Eres un usuario normal? <a href="{% url 'login' %}">Registrarse</a></p>
+        <p>¿Eres un usuario normal? <a href="{% url 'user_login' %}">Registrarse</a></p>
 
         {# Formulario de inicio de sesión #}
         <form method="post" action="{% url 'login' %}">
