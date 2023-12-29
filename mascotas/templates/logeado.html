@@ -7,7 +7,7 @@
 </head>
 <body>
 
-    <h1>Bienvenido, {{ user.username }}</h1>
+    <h1>Bienvenido, {{ user.nombre_u }} {{ user.username }}</h1>
 
     <!-- Agrega el botón para redirigir a listado_mascotas.html -->
     <a href="{% url 'listado_mascotas' %}">Ir a Listado de Mascotas</a>

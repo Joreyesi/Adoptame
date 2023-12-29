@@ -13,7 +13,7 @@
         <p style="color: red;">{{ error_message }}</p>
     {% endif %}
 
-    <form method="post" action="{% url 'listado_mascotas' %}">
+    <form method="post" action="{% url 'logeado' %}">
         {% csrf_token %}
         <label for="id_u">ID Usuario:</label>
         <input type="text" id="id_u" name="id_u" required><br>

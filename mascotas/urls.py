@@ -6,6 +6,7 @@ from .views import (
     registrar_superusuario, 
     home, 
     user_home,
+    logeado,
     LoginView  # Importa la vista de inicio de sesión
 )
 from django.contrib import admin
@@ -28,7 +29,7 @@ urlpatterns = [
     path('user/home/', user_home, name='user_home'),
     path('registrar-usuario/', registrar_usuario, name='registrar_usuario'),
     path('registrar-superusuario/', registrar_superusuario, name='registrar_superusuario'),
-    path('logeado/', views.logeado, name='logeado'),
+    path('logeado/', logeado, name='logeado'),
 ]
 
 if settings.DEBUG:
