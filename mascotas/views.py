@@ -38,8 +38,8 @@ def registrar_usuario(request):
                 # Resto de la lógica después de guardar el usuario
                 return redirect('home')
             except IntegrityError:
-                # Si hay una violación de la restricción única, el nombre de usuario ya existe
-                form.add_error('id_u', 'Este nombre de usuario ya está en uso.')
+                # Si hay una violación de la restricción única, el id_u ya existe
+                form.add_error('id_u', 'Este ID de usuario ya está en uso.')
     else:
         form = CustomUserCreationForm()
 

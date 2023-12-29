@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'mascotas.apps.MascotasConfig',
 ]
 
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -76,3 +77,5 @@ USE_TZ = True
 LANGUAGE_CODE = 'es'
 USE_I18N = True
 USE_L10N = True
+
+

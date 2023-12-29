@@ -12,7 +12,12 @@ from .views import (
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib.auth.views import LogoutView
+from django.contrib.auth.views import LogoutView, LogoutView
+from django.contrib.auth import views as auth_views
+from .forms import CustomAuthenticationForm
+
+admin.site.login = LoginView.as_view(authentication_form=CustomAuthenticationForm)
+admin.site.logout = LogoutView.as_view()  # Agrega la vista de cierre de sesión
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -22,7 +27,7 @@ urlpatterns = [
     path('adoptar_mascota/<int:mascota_id>/', views.adoptar_mascota, name='adoptar_mascota'),
     path('adoptar_mascota_lista/', views.adoptar_mascota_lista, name='adoptar_mascota_lista'),
     path('user_login/', registrar_usuario, name='user_login'),
-    path('login/', LoginView.as_view(), name='login'),  # Agrega la URL para la vista de inicio de sesión
+    path('login/', auth_views.LoginView.as_view(), name='login'),  # Agrega la URL para la vista de inicio de sesión
     path('logout/', LogoutView.as_view(), name='logout'),
     path('admin_login/', registrar_superusuario, name='admin_login'),
     path('home/', home, name='home'),

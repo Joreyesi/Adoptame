@@ -43,5 +43,7 @@ class SuperUsuarioForm(forms.ModelForm):
 
 class CustomUserCreationForm(UsuarioCreationForm):
     class Meta(UsuarioCreationForm.Meta):
-        exclude = ('is_staff', 'is_superuser', 'groups', 'user_permissions', 'last_login', 'date_joined')
+        fields = UsuarioCreationForm.Meta.fields
+        exclude = ('is_staff', 'is_superuser', 'groups', 'user_permissions', 'last_login', 'date_joined', 'id_u')  # Excluir id_u si ya está en UsuarioCreationForm
+
 

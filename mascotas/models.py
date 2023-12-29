@@ -1,7 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, Group, Permission
+from django.contrib.auth.models import AbstractUser, Group, Permission, AbstractBaseUser, BaseUserManager, PermissionsMixin
 import datetime
 import os
+
 
 # Create your models here.
 class Mascota(models.Model):
@@ -40,8 +41,25 @@ class MascotaAdoptada(models.Model):
     
 
 
+class UsuarioManager(BaseUserManager):
+    def create_user(self, id_u, password=None, **extra_fields):
+        if not id_u:
+            raise ValueError('El campo ID de usuario es obligatorio')
+        
+        user = self.model(id_u=id_u, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
 
-class Usuario(AbstractUser):
+    def create_superuser(self, id_u, password=None, **extra_fields):
+        extra_fields.setdefault('is_superuser', True)
+        
+        return self.create_user(id_u, password, **extra_fields)
+
+
+
+
+class Usuario(AbstractBaseUser, PermissionsMixin):
     GENDER_CHOICES = [
         ('M', 'Masculino'),
         ('F', 'Femenino'),
@@ -54,13 +72,14 @@ class Usuario(AbstractUser):
     genero_u = models.CharField(max_length=1, choices=GENDER_CHOICES, default='O')
     fecha_nac_u = models.DateField(default=datetime.date.today)
     id_u = models.CharField(max_length=20, unique=True, null=True, blank=True)
-    contraseña_u = models.CharField(max_length=128)  # Campo para contraseñas hash
+    email = models.EmailField(unique=True) 
     telefono_u = models.CharField(max_length=15)
     ciudad_u = models.CharField(max_length=100)
     
-    # Cambiar related_name para evitar conflictos con 'auth.User'
-    groups = models.ManyToManyField(Group, related_name='usuarios_related_groups', blank=True)
-    user_permissions = models.ManyToManyField(Permission, related_name='usuarios_related_permissions', blank=True)
+    objects = UsuarioManager()
+
+    USERNAME_FIELD = 'id_u'
+    REQUIRED_FIELDS = ['nombre_u', 'apellido_u', 'email']  # Añade campos adicionales requeridos para create_superuser
 
     def __str__(self):
         return f"{self.nombre_u} {self.apellido_u}"
