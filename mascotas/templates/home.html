@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+</head>
+<body>
+
+    <h1>Bienvenido al Sitio</h1>
+
+    {% if user.is_authenticated %}
+        {# Si el usuario ya está autenticado, muestra un saludo y un enlace para cerrar sesión #}
+        <p>Hola, {{ user.username }}. <a href="{% url 'logout' %}">Cerrar sesión</a></p>
+    {% else %}
+        {# Si el usuario no está autenticado, muestra un enlace para ir a la página de inicio de sesión #}
+        <p>¿Eres un usuario normal? <a href="{% url 'user_login' %}">Inicia sesión aquí</a></p>
+    {% endif %}
+
+</body>
+</html>
