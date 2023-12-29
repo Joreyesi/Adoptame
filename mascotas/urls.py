@@ -19,6 +19,8 @@ urlpatterns = [
     path('admin_login/', registrar_superusuario, name='admin_login'),
     path('home/', home, name='home'),
     path('user/home/', user_home, name='user_home'),
+        path('registrar-usuario/', registrar_usuario, name='registrar_usuario'),
+    path('registrar-superusuario/', registrar_superusuario, name='registrar_superusuario'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
