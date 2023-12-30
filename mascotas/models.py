@@ -52,12 +52,10 @@ class UsuarioManager(BaseUserManager):
         return user
 
     def create_superuser(self, id_u, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)  # Ajusta aquí para establecer is_staff en True
         extra_fields.setdefault('is_superuser', True)
         
         return self.create_user(id_u, password, **extra_fields)
-
-
-
 
 class Usuario(AbstractBaseUser, PermissionsMixin):
     GENDER_CHOICES = [
@@ -75,7 +73,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True) 
     telefono_u = models.CharField(max_length=15)
     ciudad_u = models.CharField(max_length=100)
-    
+
     objects = UsuarioManager()
 
     USERNAME_FIELD = 'id_u'
@@ -83,6 +81,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return f"{self.nombre_u} {self.apellido_u}"
+
 
 class SuperUsuario(AbstractUser):
     rut_superusuario = models.CharField(max_length=12, primary_key=True)

@@ -47,3 +47,8 @@ class CustomUserCreationForm(UsuarioCreationForm):
         exclude = ('is_staff', 'is_superuser', 'groups', 'user_permissions', 'last_login', 'date_joined', 'id_u')  # Excluir id_u si ya está en UsuarioCreationForm
 
 
+
+class CustomAuthenticationForm(AuthenticationForm):
+    def confirm_login_allowed(self, user):
+        # Este método evita la verificación de 'is_staff'
+        pass

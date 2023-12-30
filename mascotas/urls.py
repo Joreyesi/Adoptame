@@ -16,8 +16,7 @@ from django.contrib.auth.views import LogoutView, LogoutView
 from django.contrib.auth import views as auth_views
 from .forms import CustomAuthenticationForm
 
-admin.site.login = LoginView.as_view(authentication_form=CustomAuthenticationForm)
-admin.site.logout = LogoutView.as_view()  # Agrega la vista de cierre de sesión
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),

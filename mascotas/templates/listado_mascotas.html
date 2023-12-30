@@ -11,13 +11,21 @@
 <body class="container mt-5">
     <h1>Listado de Animales en Adopción</h1>
 
-    {% if es_admin %}
-        <!-- Botón para ir a la página de ingreso de mascotas -->
+    {% if user.is_authenticated %}
+    {% if user.is_staff %}
+        <!-- Botones para administradores -->
         <a href="{% url 'ingresar_mascota' %}" class="btn btn-primary mt-3">Ingresar Mascota</a>
-
-        <!-- Botón para ir a la página de lista de mascotas adoptadas -->
         <a href="{% url 'adoptar_mascota_lista' %}" class="btn btn-primary mt-3">Lista Mascotas Adoptadas</a>
     {% endif %}
+{% endif %}
+
+{% if user.is_authenticated %}
+    {% if user.is_staff %}
+        <p>¡Soy un administrador!</p>
+    {% else %}
+        <p>No soy administrador.</p>
+    {% endif %}
+{% endif %}
     
     <ul class="list-group">
         {% for mascota in mascotas %}

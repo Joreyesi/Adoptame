@@ -18,7 +18,8 @@ from django.db import IntegrityError
 
 
 def home(request):
-    return render(request, 'home.html')
+    context = {'user': request.user}
+    return render(request, 'home.html', context)
 
 @login_required(login_url='/user/login/')
 def user_home(request):
@@ -93,11 +94,11 @@ def generar_id_u():
 
 
 def listado_mascotas(request):
-    es_admin = request.user.is_staff  # Verifica si el usuario es administrador
-    print(es_admin)
-    mascotas = Mascota.objects.all()  # Reemplaza TuModeloDeMascotas con el nombre real de tu modelo
-
+    mascotas = Mascota.objects.all()
+    es_admin = request.user.is_authenticated and request.user.is_staff
+    # Resto del código...
     return render(request, 'listado_mascotas.html', {'mascotas': mascotas, 'es_admin': es_admin})
+
 
 
 
