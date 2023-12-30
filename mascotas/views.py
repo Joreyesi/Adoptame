@@ -16,7 +16,7 @@ from django.db import IntegrityError
 from django.core.exceptions import ValidationError
 from PIL import Image
 from io import BytesIO
-
+from django.utils import timezone
 
 
 def home(request):
@@ -181,12 +181,16 @@ def adoptar_mascota(request, mascota_id):
 
     # Verifica si la mascota no ha sido adoptada previamente
     if not hasattr(mascota, 'adoptada'):
+        # Verifica si la mascota ha sido adoptada por otro usuario desde que se cargó la página
+        if MascotaAdoptada.objects.filter(mascota=mascota).exists():
+            return render(request, 'error.html', {'mensaje': 'Esta mascota ya ha sido adoptada por otro usuario.'})
+
         # Crea una instancia de MascotaAdoptada
         mascota_adoptada = MascotaAdoptada.objects.create(
             mascota=mascota,
-            fecha_adopcion=date.today(),
-            adoptante_nombre=request.user.nombre_u,  # Asegúrate de usar el campo correcto
-            adoptante_rut=request.user.rut_usuario  # Asegúrate de usar el campo correcto
+            fecha_adopcion=timezone.now(),
+            adoptante_nombre=request.user.nombre_u,
+            adoptante_rut=request.user.rut_usuario
         )
 
         # Corrige el nombre del espacio de nombres en la función reverse
@@ -194,7 +198,7 @@ def adoptar_mascota(request, mascota_id):
         return redirect(url)
 
     # Retorna algo en el caso en que la mascota ya ha sido adoptada
-    return render(request, 'error.html', {'mensaje': 'Esta mascota ya ha sido adoptada.'})
+    return render(request, 'error.html', {'mensaje': 'Esta mascota ya ha sido adoptada previamente.'})
 
 
 
