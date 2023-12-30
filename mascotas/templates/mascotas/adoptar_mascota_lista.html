@@ -23,6 +23,15 @@
                 <strong>Raza de la mascota:</strong> {{ mascota_adoptada.mascota.raza_m }}<br>
                 <strong>Género de la mascota:</strong> {{ mascota_adoptada.mascota.genero_m }}<br>
                 <strong>Fecha de adopción:</strong> {{ mascota_adoptada.fecha_adopcion }}<br>
+
+                <!-- Mostrar el adoptante si existe -->
+                <strong>Adoptante:</strong>
+                {% if mascota_adoptada.adoptante_nombre %}
+                    {{ mascota_adoptada.adoptante_nombre }} (RUT: {{ mascota_adoptada.adoptante_rut }})
+                {% else %}
+                    No adoptada
+                {% endif %}
+                <br>
             </li>
         {% endfor %}
     </ul>

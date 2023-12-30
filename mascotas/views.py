@@ -119,13 +119,18 @@ def ingresar_mascota(request):
             mascota = form.save(commit=False)
             mascota.rut_usuario = request.user  # Usa el usuario logeado como propietario de la mascota
 
-            try:
-                resize_image(form.cleaned_data['imagen'])  # Redimensiona la imagen antes de guardarla
-                mascota.save()
-                messages.success(request, 'La mascota ha sido ingresada correctamente.')
-            except ValidationError as e:
-                messages.error(request, f'Error al ingresar la mascota: {e}')
-
+            # Validar la presencia de la imagen antes de redimensionarla
+            if form.cleaned_data['imagen']:
+                try:
+                    resize_image(form.cleaned_data['imagen'])  # Redimensiona la imagen antes de guardarla
+                    mascota.save()
+                    messages.success(request, 'La mascota ha sido ingresada correctamente.')
+                except ValidationError as e:
+                    messages.error(request, f'Error al ingresar la mascota: {e}')
+            else:
+                # Manejar el caso donde no se proporciona una imagen
+                messages.error(request, 'Error al ingresar la mascota. Por favor, sube una imagen.')
+            
             return redirect('listado_mascotas')
         else:
             messages.error(request, 'Error al ingresar la mascota. Por favor, inténtalo de nuevo.')
@@ -179,15 +184,17 @@ def adoptar_mascota(request, mascota_id):
         # Crea una instancia de MascotaAdoptada
         mascota_adoptada = MascotaAdoptada.objects.create(
             mascota=mascota,
-            fecha_adopcion=date.today()
+            fecha_adopcion=date.today(),
+            adoptante_nombre=request.user.nombre_u,  # Asegúrate de usar el campo correcto
+            adoptante_rut=request.user.rut_usuario  # Asegúrate de usar el campo correcto
         )
 
         # Corrige el nombre del espacio de nombres en la función reverse
-        url = reverse('mascotas:adoptar_mascota_lista')  # Cambia a tu nombre de URL real
+        url = reverse('listado_mascotas')
         return redirect(url)
 
     # Retorna algo en el caso en que la mascota ya ha sido adoptada
-    return HttpResponse("Esta mascota ya ha sido adoptada previamente.")
+    return render(request, 'error.html', {'mensaje': 'Esta mascota ya ha sido adoptada.'})
 
 
 

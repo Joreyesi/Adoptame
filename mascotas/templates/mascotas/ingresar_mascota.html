@@ -26,18 +26,77 @@
 
         <form method="post" action="{% url 'ingresar_mascota' %}" class="needs-validation" novalidate enctype="multipart/form-data">
             {% csrf_token %}
-            {{ form.as_p }}
+        
             <div class="form-group">
-                <!-- Agrega un campo de entrada de archivo para la imagen -->
+                <label for="{{ form.nombre_m.id_for_label }}">Nombre:</label>
+                {{ form.nombre_m }}
+            </div>
+        
+            <div class="form-group">
+                <label for="{{ form.raza_m.id_for_label }}">Raza:</label>
+                {{ form.raza_m }}
+            </div>
+        
+            <div class="form-group">
+                <label for="{{ form.vacuna_m.id_for_label }}">Vacunada:</label>
+                {{ form.vacuna_m }}
+            </div>
+        
+            <div class="form-group">
+                <label for="{{ form.tipo_m.id_for_label }}">Tipo:</label>
+                {{ form.tipo_m }}
+            </div>
+        
+            <div class="form-group">
+                <label for="{{ form.genero_m.id_for_label }}">Género:</label>
+                {{ form.genero_m }}
+            </div>
+        
+            <div class="form-group">
+                <label for="{{ form.fecha_nac_m.id_for_label }}">Fecha de Nacimiento:</label>
+                {{ form.fecha_nac_m }}
+            </div>
+        
+            <div class="form-group">
+                <label for="{{ form.tamaño_m.id_for_label }}">Tamaño:</label>
+                {{ form.tamaño_m }}
+            </div>
+        
+            <div class="form-group">
+                <label for="{{ form.color_m.id_for_label }}">Color:</label>
+                {{ form.color_m }}
+            </div>
+        
+            <div class="form-group">
+                <label for="{{ form.comportamiento_m.id_for_label }}">Comportamiento:</label>
+                {{ form.comportamiento_m }}
+            </div>
+        
+            <div class="form-group">
+                <label for="{{ form.peso_m.id_for_label }}">Peso:</label>
+                {{ form.peso_m }}
+            </div>
+        
+            <div class="form-group">
+                <label for="{{ form.especie_m.id_for_label }}">Especie:</label>
+                {{ form.especie_m }}
+            </div>
+        
+            <div class="form-group">
                 <label for="{{ form.imagen.id_for_label }}">Imagen:</label>
                 {{ form.imagen }}
             </div>
+        
+            <div class="form-group">
+                <label for="{{ form.imagen2.id_for_label }}">Imagen 2:</label>
+                {{ form.imagen2 }}
+            </div>
+        
             <div class="form-group">
                 <input type="submit" value="Ingresar Mascota" class="btn btn-primary">
                 <a href="{% url 'listado_mascotas' %}" class="btn btn-secondary">Ver listado de mascotas</a>
             </div>
         </form>
-    </div>
 
     <!-- Agrega los scripts de Bootstrap al final del body -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

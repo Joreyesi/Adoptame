@@ -45,19 +45,38 @@
                 <strong>Peso:</strong> {{ mascota.peso_m }}<br>
                 <strong>Especie:</strong> {{ mascota.especie_m }}<br>
 
-                <!-- Mostrar la imagen si existe -->
+                <!-- Mostrar la primera imagen si existe -->
                 {% if mascota.imagen %}
                     <!-- Enlace para abrir la imagen en una ventana modal -->
-                    <a href="#" data-toggle="modal" data-target="#imagenModal{{ mascota.id_mascotas }}">
-                        <img src="{{ mascota.imagen.url }}" alt="Imagen de {{ mascota.nombre_m }}" class="img-thumbnail">
+                    <a href="#" data-toggle="modal" data-target="#imagenModal{{ mascota.id_mascotas }}_1">
+                        <img src="{{ mascota.imagen.url }}" alt="Imagen 1 de {{ mascota.nombre_m }}" class="img-thumbnail">
                     </a>
 
                     <!-- Modal para mostrar la imagen en grande -->
-                    <div class="modal fade" id="imagenModal{{ mascota.id_mascotas }}" tabindex="-1" role="dialog" aria-labelledby="imagenModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="imagenModal{{ mascota.id_mascotas }}_1" tabindex="-1" role="dialog" aria-labelledby="imagenModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-body">
-                                    <img src="{{ mascota.imagen.url }}" alt="Imagen de {{ mascota.nombre_m }}" class="img-fluid" style="width: 100%;">
+                                    <img src="{{ mascota.imagen.url }}" alt="Imagen 1 de {{ mascota.nombre_m }}" class="img-fluid" style="width: 100%;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Mostrar la segunda imagen si existe -->
+                {% if mascota.imagen2 %}
+                    <!-- Enlace para abrir la imagen en una ventana modal -->
+                    <a href="#" data-toggle="modal" data-target="#imagenModal{{ mascota.id_mascotas }}_2">
+                        <img src="{{ mascota.imagen2.url }}" alt="Imagen 2 de {{ mascota.nombre_m }}" class="img-thumbnail">
+                    </a>
+
+                    <!-- Modal para mostrar la imagen en grande -->
+                    <div class="modal fade" id="imagenModal{{ mascota.id_mascotas }}_2" tabindex="-1" role="dialog" aria-labelledby="imagenModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <img src="{{ mascota.imagen2.url }}" alt="Imagen 2 de {{ mascota.nombre_m }}" class="img-fluid" style="width: 100%;">
                                 </div>
                             </div>
                         </div>
@@ -68,10 +87,12 @@
                 <a href="{% url 'adoptar_mascota' mascota.id_mascotas %}" class="btn btn-success btn-sm mt-2">Adoptar</a>
 
                 <!-- Botón Eliminar -->
+                {% if user.is_authenticated and user.is_staff %}
                 <form method="post" action="{% url 'eliminar_mascota' mascota.id_mascotas %}" style="display:inline;">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-danger btn-sm mt-2">Eliminar</button>
                 </form>
+            {% endif %}
             </li>
         {% endfor %}
     </ul>

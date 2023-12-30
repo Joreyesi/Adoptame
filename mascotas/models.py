@@ -22,6 +22,7 @@ class Mascota(models.Model):
     peso_m = models.FloatField()
     especie_m = models.CharField(max_length=50)
     imagen = models.ImageField(upload_to='uploads', blank=True, null=True)
+    imagen2 = models.ImageField(upload_to='uploads', blank=True, null=True)
 
     class Meta:
         app_label = 'mascotas'
@@ -34,6 +35,8 @@ class MascotaAdoptada(models.Model):
     id_adoptada = models.AutoField(primary_key=True)
     mascota = models.OneToOneField(Mascota, related_name='adoptada', on_delete=models.CASCADE)
     fecha_adopcion = models.DateField()
+    adoptante_nombre = models.CharField(max_length=255, blank=True, null=True)
+    adoptante_rut = models.CharField(max_length=20, blank=True, null=True)
 
     class Meta:
         app_label = 'mascotas'

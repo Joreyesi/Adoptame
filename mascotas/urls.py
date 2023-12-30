@@ -1,5 +1,5 @@
 # mascotas/urls.py
-from django.urls import path
+from django.urls import path, include
 from . import views
 from .views import (
     registrar_usuario, 
@@ -16,7 +16,7 @@ from django.contrib.auth.views import LogoutView, LogoutView
 from django.contrib.auth import views as auth_views
 from .forms import CustomAuthenticationForm
 
-
+app_name = 'mascotas'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,6 +35,8 @@ urlpatterns = [
     path('registrar-superusuario/', registrar_superusuario, name='registrar_superusuario'),
     path('logeado/', logeado, name='logeado'),
 ]
+
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
