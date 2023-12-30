@@ -13,7 +13,9 @@ from uuid import uuid4
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.db import IntegrityError
-
+from django.core.exceptions import ValidationError
+from PIL import Image
+from io import BytesIO
 
 
 
@@ -77,10 +79,17 @@ def user_login(request):
 
 
 def logeado(request):
-    return render(request, 'logeado.html', {'user': request.user})
+    if request.method == 'POST':
+        id_u = request.POST['id_u']
+        password = request.POST['password']
+        user = authenticate(request, id_u=id_u, password=password)
 
-
-
+        if user is not None:
+            login(request, user)
+            return render(request, 'logeado.html', {'user': user})
+        else:
+            # Manejar el caso en que la autenticación falla
+            return render(request, 'login.html', {'error_message': 'Usuario o contraseña incorrectos'})
 
 
 
@@ -107,29 +116,51 @@ def ingresar_mascota(request):
     if request.method == 'POST':
         form = MascotaForm(request.POST, request.FILES)
         if form.is_valid():
-            rut_usuario = generar_id_u()  # Usa la función generar_id_u
-            usuario, created = Usuario.objects.get_or_create(
-                rut_usuario=rut_usuario,
-                defaults={
-                    'nombre_u': 'Usuario Ficticio',
-                    'apellido_u': 'Ficticio',
-                    'fecha_nac_u': datetime.now(),
-                    'id_u': rut_usuario  # Asigna el valor de rut_usuario a id_u
-                }
-            )
             mascota = form.save(commit=False)
-            mascota.rut_usuario = usuario
-            mascota.save()
+            mascota.rut_usuario = request.user  # Usa el usuario logeado como propietario de la mascota
 
-            messages.success(request, 'La mascota ha sido ingresada correctamente.')
+            try:
+                resize_image(form.cleaned_data['imagen'])  # Redimensiona la imagen antes de guardarla
+                mascota.save()
+                messages.success(request, 'La mascota ha sido ingresada correctamente.')
+            except ValidationError as e:
+                messages.error(request, f'Error al ingresar la mascota: {e}')
 
             return redirect('listado_mascotas')
+        else:
+            messages.error(request, 'Error al ingresar la mascota. Por favor, inténtalo de nuevo.')
     else:
         form = MascotaForm()
 
     return render(request, 'mascotas/ingresar_mascota.html', {'form': form})
 
+def resize_image(image):
+    max_width = 600
+    max_height = 300
 
+    # Lee la imagen desde la memoria
+    image_data = BytesIO(image.read())
+    img = Image.open(image_data)
+    
+    # Redimensiona la imagen
+    img.thumbnail((max_width, max_height))
+    
+    # Reinicia el puntero del objeto BytesIO al principio
+    image_data.seek(0)
+    
+    # Guarda la imagen redimensionada en la memoria
+    img.save(image_data, format='JPEG')  # Puedes ajustar el formato según tus necesidades
+    
+    # Actualiza los datos de la imagen del formulario
+    image.file = image_data
+
+    # NOTA: No se llama a image_data.close() porque BytesIO no tiene close()
+
+    return image
+
+def detalle_mascota(request, mascota_id):
+    mascota = get_object_or_404(Mascota, pk=mascota_id)
+    return render(request, 'mascotas/detalle_mascota.html', {'mascota': mascota})
 
 
 

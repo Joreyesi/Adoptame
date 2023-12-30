@@ -1,7 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission, AbstractBaseUser, BaseUserManager, PermissionsMixin
 import datetime
+from datetime import date
 import os
+from django.utils import timezone
 
 
 # Create your models here.
@@ -40,22 +42,21 @@ class MascotaAdoptada(models.Model):
         return f"{self.mascota.nombre_m} - Adoptada el {self.fecha_adopcion}"
     
 
-
 class UsuarioManager(BaseUserManager):
-    def create_user(self, id_u, password=None, **extra_fields):
+    def create_user(self, id_u, email, password=None, **extra_fields):
         if not id_u:
             raise ValueError('El campo ID de usuario es obligatorio')
-        
-        user = self.model(id_u=id_u, **extra_fields)
+
+        email = self.normalize_email(email)
+        user = self.model(id_u=id_u, email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, id_u, password=None, **extra_fields):
-        extra_fields.setdefault('is_staff', True)  # Ajusta aquí para establecer is_staff en True
+    def create_superuser(self, id_u, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
-        
-        return self.create_user(id_u, password, **extra_fields)
+        return self.create_user(id_u, email, password, **extra_fields)
 
 class Usuario(AbstractBaseUser, PermissionsMixin):
     GENDER_CHOICES = [
@@ -68,35 +69,36 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     nombre_u = models.CharField(max_length=100)
     apellido_u = models.CharField(max_length=100)
     genero_u = models.CharField(max_length=1, choices=GENDER_CHOICES, default='O')
-    fecha_nac_u = models.DateField(default=datetime.date.today)
+    fecha_nac_u = models.DateField(default=timezone.now)
     id_u = models.CharField(max_length=20, unique=True, null=True, blank=True)
-    email = models.EmailField(unique=True) 
+    email = models.EmailField(unique=True)
     telefono_u = models.CharField(max_length=15)
     ciudad_u = models.CharField(max_length=100)
+
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
 
     objects = UsuarioManager()
 
     USERNAME_FIELD = 'id_u'
-    REQUIRED_FIELDS = ['nombre_u', 'apellido_u', 'email']  # Añade campos adicionales requeridos para create_superuser
+    REQUIRED_FIELDS = ['email']
 
     def __str__(self):
         return f"{self.nombre_u} {self.apellido_u}"
 
-
-class SuperUsuario(AbstractUser):
+class SuperUsuario(Usuario):
     rut_superusuario = models.CharField(max_length=12, primary_key=True)
     nombre_su = models.CharField(max_length=100)
     apellido_su = models.CharField(max_length=100)
     genero_su = models.CharField(max_length=10)
-    fecha_nac_su = models.DateField(default=datetime.date.today)
+    fecha_nac_su = models.DateField(default=timezone.now)
     id_su = models.CharField(max_length=20, unique=True, null=True, blank=True)
-    contraseña_su = models.CharField(max_length=128)  # Campo para contraseñas hash
     telefono_su = models.CharField(max_length=15)
     ciudad_su = models.CharField(max_length=100)
-    
-    # Cambiar related_name para evitar conflictos con 'auth.User'
-    groups = models.ManyToManyField(Group, related_name='superusuarios_related_groups', blank=True)
-    user_permissions = models.ManyToManyField(Permission, related_name='superusuarios_related_permissions', blank=True)
+
+    groups_su = models.ManyToManyField('auth.Group', related_name='superusuarios_related_groups', blank=True)
+    user_permissions_su = models.ManyToManyField('auth.Permission', related_name='superusuarios_related_permissions', blank=True)
+
 
     def __str__(self):
         return f"{self.nombre_su} {self.apellido_su}"

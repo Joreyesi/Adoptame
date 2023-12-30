@@ -47,7 +47,21 @@
 
                 <!-- Mostrar la imagen si existe -->
                 {% if mascota.imagen %}
-                <img src="{{ mascota.imagen.url }}" alt="Imagen de {{ mascota.nombre_m }}" class="img-thumbnail">
+                    <!-- Enlace para abrir la imagen en una ventana modal -->
+                    <a href="#" data-toggle="modal" data-target="#imagenModal{{ mascota.id_mascotas }}">
+                        <img src="{{ mascota.imagen.url }}" alt="Imagen de {{ mascota.nombre_m }}" class="img-thumbnail">
+                    </a>
+
+                    <!-- Modal para mostrar la imagen en grande -->
+                    <div class="modal fade" id="imagenModal{{ mascota.id_mascotas }}" tabindex="-1" role="dialog" aria-labelledby="imagenModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <img src="{{ mascota.imagen.url }}" alt="Imagen de {{ mascota.nombre_m }}" class="img-fluid" style="width: 100%;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 {% endif %}
 
                 <!-- Botón Adoptar -->

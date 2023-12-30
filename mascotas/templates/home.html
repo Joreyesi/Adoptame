@@ -12,7 +12,7 @@
     {% if user.is_authenticated %}
         {# Si el usuario ya está autenticado, muestra un saludo y un enlace para cerrar sesión #}
         <p>Hola, {{ user.id_u }}. <a href="{% url 'logout' %}">Cerrar sesión</a></p>
-
+        <a href="{% url 'listado_mascotas' %}">Listado de mascotas</a>
         {% if user.is_staff %}
             {# Si el usuario es admin, muestra botones adicionales #}
             <p>¿Eres un administrador?</p>

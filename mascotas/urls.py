@@ -27,7 +27,7 @@ urlpatterns = [
     path('adoptar_mascota_lista/', views.adoptar_mascota_lista, name='adoptar_mascota_lista'),
     path('user_login/', registrar_usuario, name='user_login'),
     path('login/', auth_views.LoginView.as_view(), name='login'),  # Agrega la URL para la vista de inicio de sesión
-    path('logout/', LogoutView.as_view(), name='logout'),
+    path('logout/', LogoutView.as_view(next_page='/home/'), name='logout'),
     path('admin_login/', registrar_superusuario, name='admin_login'),
     path('home/', home, name='home'),
     path('user/home/', user_home, name='user_home'),

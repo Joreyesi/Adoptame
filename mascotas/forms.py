@@ -8,8 +8,7 @@ from django.forms import DateInput
 class MascotaForm(forms.ModelForm):
     class Meta:
         model = Mascota
-        exclude = ['rut_usuario']
-        today = date.today()
+        exclude = ['rut_usuario']  # Puedes excluir campos adicionales si es necesario
         widgets = {
             'fecha_nac_m': forms.TextInput(attrs={'type': 'date'}),
         }
@@ -31,7 +30,7 @@ class DateInput(forms.DateInput):
 class UsuarioCreationForm(UserCreationForm):
     class Meta:
         model = Usuario
-        fields = ('rut_usuario','nombre_u', 'apellido_u', 'genero_u', 'fecha_nac_u', 'id_u', 'password1', 'password2','telefono_u', 'ciudad_u')
+        fields = ('rut_usuario','nombre_u', 'apellido_u', 'genero_u', 'fecha_nac_u', 'id_u', 'password1', 'password2','email','telefono_u', 'ciudad_u')
         widgets = {
             'fecha_nac_u': DateInput(),
         }
@@ -44,7 +43,7 @@ class SuperUsuarioForm(forms.ModelForm):
 class CustomUserCreationForm(UsuarioCreationForm):
     class Meta(UsuarioCreationForm.Meta):
         fields = UsuarioCreationForm.Meta.fields
-        exclude = ('is_staff', 'is_superuser', 'groups', 'user_permissions', 'last_login', 'date_joined', 'id_u')  # Excluir id_u si ya está en UsuarioCreationForm
+        exclude = ('is_staff', 'is_superuser', 'groups', 'user_permissions', 'last_login', 'date_joined')  # Excluir id_u si ya está en UsuarioCreationForm
 
 
 
@@ -52,3 +51,16 @@ class CustomAuthenticationForm(AuthenticationForm):
     def confirm_login_allowed(self, user):
         # Este método evita la verificación de 'is_staff'
         pass
+
+
+class CustomFileInput(forms.ClearableFileInput):
+    def render(self, name, value, attrs=None, renderer=None):
+        template_name = 'custom_file_input.html'  # Puedes crear un archivo HTML personalizado
+        context = {'widget': self, 'name': name, 'value': value, 'attrs': attrs}
+        return super().render(name, value, attrs, renderer)
+
+    def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+        # Añade atributos para especificar el tamaño máximo
+        context['widget']['attrs'].update({'accept': 'image/*', 'onchange': 'resizeImage(this)'})
+        return context

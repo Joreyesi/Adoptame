@@ -8,15 +8,18 @@
 <body>
 
     {% if user.is_authenticated %}
-    <h1>Bienvenido, {{ user.nombre_u }}</h1>
-    <h1>Bienvenido, {{ user.username }}</h1>
+
     <h1>Bienvenido, {{ user.id_u }}</h1>
+
+    <!-- Agrega el botón para cerrar sesión -->
+    <a href="{% url 'logout' %}">Cerrar sesión</a>
 
     <!-- Agrega el botón para redirigir a listado_mascotas.html -->
     <a href="{% url 'listado_mascotas' %}">Ir a Listado de Mascotas</a>
-{% else %}
+    
+    {% else %}
     <p>Usuario no autenticado</p>
-{% endif %}
+    {% endif %}
 
 </body>
 </html>

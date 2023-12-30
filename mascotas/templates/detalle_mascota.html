@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Mascota</title>
+</head>
+<body>
+    <h1>Detalle de Mascota</h1>
+
+    <img src="{{ mascota.imagen.url }}" alt="{{ mascota.nombre_m }}">
+
+    <p>Nombre: {{ mascota.nombre_m }}</p>
+    <!-- Agrega más detalles según tus necesidades -->
+
+    <a href="{% url 'listado_mascotas' %}">Volver al Listado de Mascotas</a>
+</body>
+</html>
