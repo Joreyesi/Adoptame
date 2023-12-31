@@ -8,22 +8,32 @@ from django.forms import DateInput
 class MascotaForm(forms.ModelForm):
     class Meta:
         model = Mascota
-        exclude = ['rut_usuario']  # Puedes excluir campos adicionales si es necesario
+        exclude = ['rut_usuario']
         widgets = {
             'fecha_nac_m': forms.TextInput(attrs={'type': 'date'}),
         }
 
-    # Agrega este método para manejar el campo de imagen
     def __init__(self, *args, **kwargs):
         super(MascotaForm, self).__init__(*args, **kwargs)
-        self.fields['imagen'].required = False
-        self.fields['imagen2'].required = False
-        self.fields['imagen'].widget.attrs['accept'] = 'image/*'
-        self.fields['imagen2'].widget.attrs['accept'] = 'image/*'
 
-    def save(self, commit=True):
-        instance = super(MascotaForm, self).save(commit=commit)
-        return instance
+        # Obtener el tipo de animal actual (si está presente)
+        animal_value = self.initial.get('animal_m') or (self.instance.animal_m if self.instance.pk else None)
+
+        # Obtener las opciones de raza correspondientes al tipo de animal
+        raza_options = Mascota.RAZA_CHOICES.get(animal_value, [])
+
+        # Agregar la opción por defecto si no está presente y animal_value no es None
+        default_option = ('', '---------')
+        if animal_value is not None and default_option not in raza_options:
+            raza_options.insert(0, default_option)
+
+        # Utilizar el widget directamente para establecer las opciones
+        self.fields['raza_m'].widget.choices = raza_options
+
+
+
+
+
     
 
 class DateInput(forms.DateInput):

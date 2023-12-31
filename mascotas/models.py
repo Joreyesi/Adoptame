@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission, AbstractBaseUser, BaseUserManager, PermissionsMixin
 import datetime
 from datetime import date
-import os
+import os, random
 from django.utils import timezone
 
 
@@ -11,24 +11,67 @@ class Mascota(models.Model):
     id_mascotas = models.AutoField(primary_key=True)
     rut_usuario = models.ForeignKey('mascotas.Usuario', related_name='mascotas', on_delete=models.CASCADE)
     nombre_m = models.CharField(max_length=100)
-    raza_m = models.CharField(max_length=100)
+
+    
+    ANIMAL_CHOICES = [
+        ('Perro', 'Perro'),
+        ('Gato', 'Gato'),
+        ('Conejo', 'Conejo'),
+        ('Hámster', 'Hámster'),
+        # Agrega otros animales si es necesario
+    ]
+
+    RAZA_CHOICES = {
+        'Perro': [
+            ('Chihuahua', 'Chihuahua'),
+            ('Labrador', 'Labrador'),
+            # Otras razas de perros
+        ],
+        'Gato': [
+            ('Siamés', 'Siamés'),
+            ('Persa', 'Persa'),
+            # Otras razas de gatos
+        ],
+        'Conejo': [
+            ('Holandés', 'Holandés'),
+            ('Enano Holandés', 'Enano Holandés'),
+            # Otras razas de conejos
+        ],
+        'Hámster': [
+            ('Dorado', 'Dorado'),
+            ('Sirio', 'Sirio'),
+            # Otras razas de hámsters
+        ],
+    }
+
+    animal_m = models.CharField(max_length=20, choices=ANIMAL_CHOICES, default='Perro')
+    raza_m = models.CharField(max_length=50, choices=[], blank=True)
+    genero_m = models.CharField(max_length=10, choices=[('Macho', 'Macho'), ('Hembra', 'Hembra')], default='Macho')
     vacuna_m = models.BooleanField(default=False)
-    tipo_m = models.CharField(max_length=100)
-    genero_m = models.CharField(max_length=10)
+
     fecha_nac_m = models.DateField()
+    peso_m = models.FloatField()
     tamaño_m = models.CharField(max_length=20)
     color_m = models.CharField(max_length=50)
     comportamiento_m = models.TextField()
-    peso_m = models.FloatField()
-    especie_m = models.CharField(max_length=50)
     imagen = models.ImageField(upload_to='uploads', blank=True, null=True)
     imagen2 = models.ImageField(upload_to='uploads', blank=True, null=True)
 
+    def save(self, *args, **kwargs):
+        # Configurar las opciones de raza_m según el tipo de animal
+        raza_options = Mascota.RAZA_CHOICES.get(self.animal_m, [])
+        self.raza_m = ""
+        if raza_options:
+            self.raza_m = raza_options[0][0]  # Establece el valor predeterminado como la primera opción
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.nombre_m} ({self.animal_m} - {self.raza_m} - {self.genero_m})"
+    
     class Meta:
         app_label = 'mascotas'
 
-    def __str__(self):
-        return self.nombre_m
+
     
 
 class MascotaAdoptada(models.Model):
@@ -37,6 +80,7 @@ class MascotaAdoptada(models.Model):
     fecha_adopcion = models.DateField()
     adoptante_nombre = models.CharField(max_length=255, blank=True, null=True)
     adoptante_rut = models.CharField(max_length=20, blank=True, null=True)
+    ciudad_a = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
         app_label = 'mascotas'
@@ -68,6 +112,11 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
         ('O', 'Otro'),
     ]
 
+    CITY_CHOICES = [
+        ('Iquique', 'Iquique'),
+        ('Alto Hospicio', 'Alto Hospicio'),
+    ]
+
     rut_usuario = models.CharField(max_length=12, primary_key=True)
     nombre_u = models.CharField(max_length=100)
     apellido_u = models.CharField(max_length=100)
@@ -76,7 +125,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     id_u = models.CharField(max_length=20, unique=True, null=True, blank=True)
     email = models.EmailField(unique=True)
     telefono_u = models.CharField(max_length=15)
-    ciudad_u = models.CharField(max_length=100)
+    ciudad_u = models.CharField(max_length=100, choices=CITY_CHOICES)  # Utiliza las opciones específicas
 
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -85,6 +134,7 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'id_u'
     REQUIRED_FIELDS = ['email']
+
 
     def __str__(self):
         return f"{self.nombre_u} {self.apellido_u}"

@@ -33,23 +33,24 @@
             </div>
         
             <div class="form-group">
+                <label for="{{ form.animal_m.id_for_label }}">Tipo de Animal:</label>
+                {{ form.animal_m|capfirst }}
+            </div>
+            
+            <div class="form-group">
                 <label for="{{ form.raza_m.id_for_label }}">Raza:</label>
                 {{ form.raza_m }}
+            </div>
+            
+
+            <div class="form-group">
+                <label for="{{ form.genero_m.id_for_label }}">Género:</label>
+                {{ form.genero_m }}
             </div>
         
             <div class="form-group">
                 <label for="{{ form.vacuna_m.id_for_label }}">Vacunada:</label>
                 {{ form.vacuna_m }}
-            </div>
-        
-            <div class="form-group">
-                <label for="{{ form.tipo_m.id_for_label }}">Tipo:</label>
-                {{ form.tipo_m }}
-            </div>
-        
-            <div class="form-group">
-                <label for="{{ form.genero_m.id_for_label }}">Género:</label>
-                {{ form.genero_m }}
             </div>
         
             <div class="form-group">
@@ -61,6 +62,11 @@
                 <label for="{{ form.tamaño_m.id_for_label }}">Tamaño:</label>
                 {{ form.tamaño_m }}
             </div>
+
+            <div class="form-group">
+                <label for="{{ form.peso_m.id_for_label }}">Peso:</label>
+                {{ form.peso_m }}
+            </div>
         
             <div class="form-group">
                 <label for="{{ form.color_m.id_for_label }}">Color:</label>
@@ -70,16 +76,6 @@
             <div class="form-group">
                 <label for="{{ form.comportamiento_m.id_for_label }}">Comportamiento:</label>
                 {{ form.comportamiento_m }}
-            </div>
-        
-            <div class="form-group">
-                <label for="{{ form.peso_m.id_for_label }}">Peso:</label>
-                {{ form.peso_m }}
-            </div>
-        
-            <div class="form-group">
-                <label for="{{ form.especie_m.id_for_label }}">Especie:</label>
-                {{ form.especie_m }}
             </div>
         
             <div class="form-group">
@@ -102,5 +98,63 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Añade este bloque de script para manejar la actualización dinámica de opciones de raza -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        updateRazaOptions();
+
+        document.getElementById("id_animal_m").addEventListener("change", function () {
+            updateRazaOptions();
+        });
+
+        function updateRazaOptions() {
+            var animalSelect = document.getElementById("id_animal_m");
+            var razaSelect = document.getElementById("id_raza_m");
+            var animalValue = animalSelect.options[animalSelect.selectedIndex].value;
+
+            // Obtener las opciones de raza correspondientes al tipo de animal seleccionado
+            var razaOptions = getRazaOptions(animalValue);
+
+            // Limpiar las opciones actuales
+            razaSelect.options.length = 0;
+
+            // Agregar las nuevas opciones
+            for (var i = 0; i < razaOptions.length; i++) {
+                var option = document.createElement("option");
+                option.value = razaOptions[i][0];
+                option.text = razaOptions[i][1];
+                razaSelect.appendChild(option);
+            }
+        }
+
+        function getRazaOptions(animalValue) {
+            const razaOptionsMap = {
+                'Perro': [
+                    ['Chihuahua', 'Chihuahua'],
+                    ['Labrador', 'Labrador'],
+                    // ... otras razas de perros ...
+                ],
+                'Gato': [
+                    ['Siamés', 'Siamés'],
+                    ['Persa', 'Persa'],
+                    // ... otras razas de gatos ...
+                ],
+                'Conejo': [
+                    ['Holandés', 'Holandés'],
+                    ['Enano Holandés', 'Enano Holandés'],
+                    // ... otras razas de conejos ...
+                ],
+                'Hámster': [
+                    ['Dorado', 'Dorado'],
+                    ['Sirio', 'Sirio'],
+                    // ... otras razas de hámsters ...
+                ],
+            };
+
+            return razaOptionsMap[animalValue] || [];
+        }
+    });
+</script>
 </body>
 </html>

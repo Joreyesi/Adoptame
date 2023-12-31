@@ -19,13 +19,7 @@
     {% endif %}
 {% endif %}
 
-{% if user.is_authenticated %}
-    {% if user.is_staff %}
-        <p>¡Soy un administrador!</p>
-    {% else %}
-        <p>No soy administrador.</p>
-    {% endif %}
-{% endif %}
+
     
     <ul class="list-group">
         {% for mascota in mascotas %}
@@ -34,16 +28,16 @@
 
                 <!-- Información de la mascota -->
                 <strong>Nombre:</strong> {{ mascota.nombre_m }}<br>
+                <strong>Animal:</strong> {{ mascota.animal_m }}<br>
                 <strong>Raza:</strong> {{ mascota.raza_m }}<br>
                 <strong>Vacunada:</strong> {% if mascota.vacuna_m %}Sí{% else %}No{% endif %}<br>
-                <strong>Tipo:</strong> {{ mascota.tipo_m }}<br>
                 <strong>Género:</strong> {{ mascota.genero_m }}<br>
                 <strong>Fecha de Nacimiento:</strong> {{ mascota.fecha_nac_m }}<br>
                 <strong>Tamaño:</strong> {{ mascota.tamaño_m }}<br>
+                <strong>Peso:</strong> {{ mascota.peso_m }}<br>
                 <strong>Color:</strong> {{ mascota.color_m }}<br>
                 <strong>Comportamiento:</strong> {{ mascota.comportamiento_m }}<br>
-                <strong>Peso:</strong> {{ mascota.peso_m }}<br>
-                <strong>Especie:</strong> {{ mascota.especie_m }}<br>
+
 
                 <!-- Mostrar la primera imagen si existe -->
                 {% if mascota.imagen %}
@@ -83,16 +77,20 @@
                     </div>
                 {% endif %}
 
-                <!-- Botón Adoptar -->
-                <a href="{% url 'adoptar_mascota' mascota.id_mascotas %}" class="btn btn-success btn-sm mt-2">Adoptar</a>
-
-                <!-- Botón Eliminar -->
-                {% if user.is_authenticated and user.is_staff %}
-                <form method="post" action="{% url 'eliminar_mascota' mascota.id_mascotas %}" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-danger btn-sm mt-2">Eliminar</button>
-                </form>
+                {% if user.is_authenticated %}
+                {% if not user.is_staff %}
+                    <!-- Botón Adoptar (visible solo para usuarios no administradores) -->
+                    <a href="{% url 'adoptar_mascota' mascota.id_mascotas %}" class="btn btn-success btn-sm mt-2">Adoptar</a>
+                {% endif %}
+                <!-- Botón Eliminar (visible solo para administradores) -->
+                {% if user.is_staff %}
+                    <form method="post" action="{% url 'eliminar_mascota' mascota.id_mascotas %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm mt-2">Eliminar</button>
+                    </form>
+                {% endif %}
             {% endif %}
+            
             </li>
         {% endfor %}
     </ul>

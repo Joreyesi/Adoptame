@@ -20,6 +20,7 @@
         {% for mascota_adoptada in mascotas_adoptadas %}
             <li class="list-group-item">
                 <strong>Nombre de la mascota:</strong> {{ mascota_adoptada.mascota.nombre_m }}<br>
+                <strong>Tipo de Animal:</strong> {{ mascota_adoptada.mascota.animal_m }}<br>
                 <strong>Raza de la mascota:</strong> {{ mascota_adoptada.mascota.raza_m }}<br>
                 <strong>Género de la mascota:</strong> {{ mascota_adoptada.mascota.genero_m }}<br>
                 <strong>Fecha de adopción:</strong> {{ mascota_adoptada.fecha_adopcion }}<br>
@@ -27,7 +28,7 @@
                 <!-- Mostrar el adoptante si existe -->
                 <strong>Adoptante:</strong>
                 {% if mascota_adoptada.adoptante_nombre %}
-                    {{ mascota_adoptada.adoptante_nombre }} (RUT: {{ mascota_adoptada.adoptante_rut }})
+                    {{ mascota_adoptada.adoptante_nombre }} (RUT: {{ mascota_adoptada.adoptante_rut }}) - Ciudad: {{ mascota_adoptada.ciudad_a }}
                 {% else %}
                     No adoptada
                 {% endif %}

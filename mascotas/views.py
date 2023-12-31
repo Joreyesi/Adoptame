@@ -104,43 +104,53 @@ def generar_id_u():
 
 
 def listado_mascotas(request):
-    mascotas = Mascota.objects.all()
+    mascotas_disponibles = Mascota.objects.exclude(id_mascotas__in=MascotaAdoptada.objects.values('mascota')).order_by('-fecha_nac_m')
     es_admin = request.user.is_authenticated and request.user.is_staff
     # Resto del código...
-    return render(request, 'listado_mascotas.html', {'mascotas': mascotas, 'es_admin': es_admin})
+    return render(request, 'listado_mascotas.html', {'mascotas': mascotas_disponibles, 'es_admin': es_admin})
 
 
 
 
 
 def ingresar_mascota(request):
+    form = MascotaForm()  # Formulario vacío por defecto
+
     if request.method == 'POST':
         form = MascotaForm(request.POST, request.FILES)
+        print(form.fields['raza_m'].choices)
+        print(request.POST)
+        print(request.FILES)
+        
         if form.is_valid():
             mascota = form.save(commit=False)
-            mascota.rut_usuario = request.user  # Usa el usuario logeado como propietario de la mascota
+            mascota.rut_usuario = request.user
 
-            # Validar la presencia de la imagen antes de redimensionarla
-            if form.cleaned_data['imagen']:
+            if mascota.imagen:
                 try:
-                    resize_image(form.cleaned_data['imagen'])  # Redimensiona la imagen antes de guardarla
+                    print("Antes de resize_image")
+                    resize_image(mascota.imagen)
+                    print("Después de resize_image")
+                    
                     mascota.save()
                     messages.success(request, 'La mascota ha sido ingresada correctamente.')
+                    return redirect('listado_mascotas')
                 except ValidationError as e:
-                    messages.error(request, f'Error al ingresar la mascota: {e}')
+                    form.add_error(None, f'Error al ingresar la mascota: {e}')
             else:
-                # Manejar el caso donde no se proporciona una imagen
-                messages.error(request, 'Error al ingresar la mascota. Por favor, sube una imagen.')
-            
-            return redirect('listado_mascotas')
+                form.add_error('imagen', 'Error al ingresar la mascota. Por favor, sube una imagen.')
         else:
+            print(form.errors)  # Agrega esta línea para imprimir los errores del formulario
             messages.error(request, 'Error al ingresar la mascota. Por favor, inténtalo de nuevo.')
-    else:
-        form = MascotaForm()
+    
+    # Resto del código...
 
     return render(request, 'mascotas/ingresar_mascota.html', {'form': form})
 
+
+
 def resize_image(image):
+    print("Entré a resize_image")
     max_width = 600
     max_height = 300
 
@@ -156,11 +166,15 @@ def resize_image(image):
     
     # Guarda la imagen redimensionada en la memoria
     img.save(image_data, format='JPEG')  # Puedes ajustar el formato según tus necesidades
-    
-    # Actualiza los datos de la imagen del formulario
-    image.file = image_data
 
-    # NOTA: No se llama a image_data.close() porque BytesIO no tiene close()
+    # Crea un nuevo objeto de archivo para asignar al campo de imagen
+    new_image = BytesIO()
+    new_image.write(image_data.getvalue())
+    new_image.seek(0)
+
+    # Actualiza el campo de imagen con el nuevo objeto de archivo
+    image.file = new_image
+    image.name = f'resized_{image.name}'  # Puedes cambiar el nombre según tus necesidades
 
     return image
 
@@ -177,6 +191,8 @@ def eliminar_mascota(request, mascota_id):
 
 
 
+
+
 def adoptar_mascota(request, mascota_id):
     mascota = get_object_or_404(Mascota, id_mascotas=mascota_id)
 
@@ -184,22 +200,29 @@ def adoptar_mascota(request, mascota_id):
     if not hasattr(mascota, 'adoptada'):
         # Verifica si la mascota ha sido adoptada por otro usuario desde que se cargó la página
         if MascotaAdoptada.objects.filter(mascota=mascota).exists():
-            return render(request, 'error.html', {'mensaje': 'Esta mascota ya ha sido adoptada por otro usuario.'})
+            messages.error(request, 'Esta mascota ya ha sido adoptada por otro usuario.')
+            return redirect('listado_mascotas')
 
         # Crea una instancia de MascotaAdoptada
         mascota_adoptada = MascotaAdoptada.objects.create(
             mascota=mascota,
             fecha_adopcion=timezone.now(),
             adoptante_nombre=request.user.nombre_u,
-            adoptante_rut=request.user.rut_usuario
+            adoptante_rut=request.user.rut_usuario,
+            ciudad_a=request.user.ciudad_u
         )
 
-        # Corrige el nombre del espacio de nombres en la función reverse
-        url = reverse('listado_mascotas')
-        return redirect(url)
+        # No elimines la mascota aquí, simplemente quítala de la lista mostrada
+        # mascota.delete()
+
+        # Redirige al listado de mascotas disponibles
+        messages.success(request, '¡Felicidades! Has adoptado a {}'.format(mascota.nombre_m))
+        return redirect('listado_mascotas')
 
     # Retorna algo en el caso en que la mascota ya ha sido adoptada
-    return render(request, 'error.html', {'mensaje': 'Esta mascota ya ha sido adoptada previamente.'})
+    messages.error(request, 'Esta mascota ya ha sido adoptada previamente.')
+    return redirect('listado_mascotas')
+
 
 
 
