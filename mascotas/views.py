@@ -112,26 +112,17 @@ def listado_mascotas(request):
 
 
 
-
 def ingresar_mascota(request):
-    form = MascotaForm()  # Formulario vacío por defecto
-
     if request.method == 'POST':
         form = MascotaForm(request.POST, request.FILES)
-        print(form.fields['raza_m'].choices)
-        print(request.POST)
-        print(request.FILES)
-        
+
         if form.is_valid():
             mascota = form.save(commit=False)
             mascota.rut_usuario = request.user
 
             if mascota.imagen:
                 try:
-                    print("Antes de resize_image")
-                    resize_image(mascota.imagen)
-                    print("Después de resize_image")
-                    
+                    # Puedes realizar otras operaciones antes de guardar la mascota si es necesario
                     mascota.save()
                     messages.success(request, 'La mascota ha sido ingresada correctamente.')
                     return redirect('listado_mascotas')
@@ -140,12 +131,12 @@ def ingresar_mascota(request):
             else:
                 form.add_error('imagen', 'Error al ingresar la mascota. Por favor, sube una imagen.')
         else:
-            print(form.errors)  # Agrega esta línea para imprimir los errores del formulario
             messages.error(request, 'Error al ingresar la mascota. Por favor, inténtalo de nuevo.')
-    
-    # Resto del código...
+    else:
+        form = MascotaForm()
 
     return render(request, 'mascotas/ingresar_mascota.html', {'form': form})
+
 
 
 

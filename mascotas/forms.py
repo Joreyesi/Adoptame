@@ -16,6 +16,9 @@ class MascotaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(MascotaForm, self).__init__(*args, **kwargs)
 
+        # Obtener las opciones de animal desde el modelo
+        animal_choices = Mascota.ANIMAL_CHOICES
+
         # Obtener el tipo de animal actual (si está presente)
         animal_value = self.initial.get('animal_m') or (self.instance.animal_m if self.instance.pk else None)
 
@@ -23,12 +26,12 @@ class MascotaForm(forms.ModelForm):
         raza_options = Mascota.RAZA_CHOICES.get(animal_value, [])
 
         # Agregar la opción por defecto si no está presente y animal_value no es None
-        default_option = ('', '---------')
-        if animal_value is not None and default_option not in raza_options:
-            raza_options.insert(0, default_option)
+        if animal_value is not None and ('', '---------') not in raza_options:
+            raza_options.insert(0, ('', '---------'))
 
         # Utilizar el widget directamente para establecer las opciones
-        self.fields['raza_m'].widget.choices = raza_options
+        self.fields['raza_m'].widget = forms.Select(choices=raza_options)
+
 
 
 

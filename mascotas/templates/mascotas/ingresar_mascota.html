@@ -31,10 +31,10 @@
                 <label for="{{ form.nombre_m.id_for_label }}">Nombre:</label>
                 {{ form.nombre_m }}
             </div>
-        
+
             <div class="form-group">
                 <label for="{{ form.animal_m.id_for_label }}">Tipo de Animal:</label>
-                {{ form.animal_m|capfirst }}
+                {{ form.animal_m }}
             </div>
             
             <div class="form-group">
@@ -100,61 +100,65 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <!-- Añade este bloque de script para manejar la actualización dinámica de opciones de raza -->
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        updateRazaOptions();
-
-        document.getElementById("id_animal_m").addEventListener("change", function () {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
             updateRazaOptions();
-        });
 
-        function updateRazaOptions() {
-            var animalSelect = document.getElementById("id_animal_m");
-            var razaSelect = document.getElementById("id_raza_m");
-            var animalValue = animalSelect.options[animalSelect.selectedIndex].value;
+            document.getElementById("id_animal_m").addEventListener("change", function () {
+                updateRazaOptions();
+            });
 
-            // Obtener las opciones de raza correspondientes al tipo de animal seleccionado
-            var razaOptions = getRazaOptions(animalValue);
+            function updateRazaOptions() {
+                var animalSelect = document.getElementById("id_animal_m");
+                var razaSelect = document.getElementById("id_raza_m");
+                var animalValue = animalSelect.options[animalSelect.selectedIndex].value;
 
-            // Limpiar las opciones actuales
-            razaSelect.options.length = 0;
+                // Capitalizar la primera letra del valor seleccionado
+                animalValue = animalValue.charAt(0).toUpperCase() + animalValue.slice(1);
 
-            // Agregar las nuevas opciones
-            for (var i = 0; i < razaOptions.length; i++) {
-                var option = document.createElement("option");
-                option.value = razaOptions[i][0];
-                option.text = razaOptions[i][1];
-                razaSelect.appendChild(option);
+                // Obtener las opciones de raza correspondientes al tipo de animal seleccionado
+                var razaOptions = getRazaOptions(animalValue);
+
+                // Limpiar las opciones actuales
+                razaSelect.options.length = 0;
+
+                // Agregar las nuevas opciones
+                for (var i = 0; i < razaOptions.length; i++) {
+                    var option = document.createElement("option");
+                    option.value = razaOptions[i][0];
+                    option.text = razaOptions[i][1];
+                    razaSelect.appendChild(option);
+                }
             }
-        }
 
-        function getRazaOptions(animalValue) {
-            const razaOptionsMap = {
-                'Perro': [
-                    ['Chihuahua', 'Chihuahua'],
-                    ['Labrador', 'Labrador'],
-                    // ... otras razas de perros ...
-                ],
-                'Gato': [
-                    ['Siamés', 'Siamés'],
-                    ['Persa', 'Persa'],
-                    // ... otras razas de gatos ...
-                ],
-                'Conejo': [
-                    ['Holandés', 'Holandés'],
-                    ['Enano Holandés', 'Enano Holandés'],
-                    // ... otras razas de conejos ...
-                ],
-                'Hámster': [
-                    ['Dorado', 'Dorado'],
-                    ['Sirio', 'Sirio'],
-                    // ... otras razas de hámsters ...
-                ],
-            };
+            function getRazaOptions(animalValue) {
+                const razaOptionsMap = {
+                    'Perro': [
+                        ['Chihuahua', 'Chihuahua'],
+                        ['Labrador', 'Labrador'],
+                        // ... otras razas de perros ...
+                    ],
+                    'Gato': [
+                        ['Siamés', 'Siamés'],
+                        ['Persa', 'Persa'],
+                        // ... otras razas de gatos ...
+                    ],
+                    'Conejo': [
+                        ['Holandes', 'Holandes'],
+                        ['Enano Holandes', 'Enano Holandes'],
+                        // ... otras razas de conejos ...
+                    ],
+                    'Hamster': [
+                        ['Dorado', 'Dorado'],
+                        ['Sirio', 'Sirio'],
+                        // ... otras razas de hamsters ...
+                    ],
+                };
 
-            return razaOptionsMap[animalValue] || [];
-        }
-    });
-</script>
+                // Convertir todas las opciones de raza a minúsculas
+                return razaOptionsMap[animalValue] || [];
+            }
+        });
+    </script>
 </body>
 </html>

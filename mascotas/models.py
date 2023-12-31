@@ -8,47 +8,49 @@ from django.utils import timezone
 
 # Create your models here.
 class Mascota(models.Model):
-    id_mascotas = models.AutoField(primary_key=True)
-    rut_usuario = models.ForeignKey('mascotas.Usuario', related_name='mascotas', on_delete=models.CASCADE)
-    nombre_m = models.CharField(max_length=100)
+    PERRO = 'Perro'
+    GATO = 'Gato'
+    CONEJO = 'Conejo'
+    HAMSTER = 'Hamster'
 
-    
     ANIMAL_CHOICES = [
-        ('Perro', 'Perro'),
-        ('Gato', 'Gato'),
-        ('Conejo', 'Conejo'),
-        ('Hámster', 'Hámster'),
-        # Agrega otros animales si es necesario
+        (PERRO, 'Perro'),
+        (GATO, 'Gato'),
+        (CONEJO, 'Conejo'),
+        (HAMSTER, 'Hamster'),
     ]
 
     RAZA_CHOICES = {
         'Perro': [
             ('Chihuahua', 'Chihuahua'),
             ('Labrador', 'Labrador'),
-            # Otras razas de perros
+            # ... otras razas de perros ...
         ],
         'Gato': [
-            ('Siamés', 'Siamés'),
+            ('Siames', 'Siames'),
             ('Persa', 'Persa'),
-            # Otras razas de gatos
+            # ... otras razas de gatos ...
         ],
         'Conejo': [
-            ('Holandés', 'Holandés'),
-            ('Enano Holandés', 'Enano Holandés'),
-            # Otras razas de conejos
+            ('Holandes', 'Holandes'),
+            ('Enano Holandes', 'Enano Holandes'),
+            # ... otras razas de conejos ...
         ],
-        'Hámster': [
+        'Hamster': [
             ('Dorado', 'Dorado'),
             ('Sirio', 'Sirio'),
-            # Otras razas de hámsters
+            # ... otras razas de hamsters ...
         ],
     }
 
-    animal_m = models.CharField(max_length=20, choices=ANIMAL_CHOICES, default='Perro')
-    raza_m = models.CharField(max_length=50, choices=[], blank=True)
+
+    id_mascotas = models.AutoField(primary_key=True)
+    rut_usuario = models.ForeignKey('mascotas.Usuario', related_name='mascotas', on_delete=models.CASCADE)
+    nombre_m = models.CharField(max_length=100)
+    animal_m = models.CharField(max_length=20, choices=ANIMAL_CHOICES)
+    raza_m = models.CharField(max_length=50)
     genero_m = models.CharField(max_length=10, choices=[('Macho', 'Macho'), ('Hembra', 'Hembra')], default='Macho')
     vacuna_m = models.BooleanField(default=False)
-
     fecha_nac_m = models.DateField()
     peso_m = models.FloatField()
     tamaño_m = models.CharField(max_length=20)
@@ -57,13 +59,34 @@ class Mascota(models.Model):
     imagen = models.ImageField(upload_to='uploads', blank=True, null=True)
     imagen2 = models.ImageField(upload_to='uploads', blank=True, null=True)
 
-    def save(self, *args, **kwargs):
-        # Configurar las opciones de raza_m según el tipo de animal
-        raza_options = Mascota.RAZA_CHOICES.get(self.animal_m, [])
-        self.raza_m = ""
-        if raza_options:
-            self.raza_m = raza_options[0][0]  # Establece el valor predeterminado como la primera opción
-        super().save(*args, **kwargs)
+    @classmethod
+    def get_raza_choices(cls, animal):
+        if animal == cls.PERRO:
+            return [
+                ('Chihuahua', 'Chihuahua'),
+                ('Labrador', 'Labrador'),
+                # ... otras razas de perros ...
+            ]
+        elif animal == cls.GATO:
+            return [
+                ('Siamés', 'Siamés'),
+                ('Persa', 'Persa'),
+                # ... otras razas de gatos ...
+            ]
+        elif animal == cls.CONEJO:
+            return [
+                ('Holandés', 'Holandés'),
+                ('Enano Holandés', 'Enano Holandés'),
+                # ... otras razas de conejos ...
+            ]
+        elif animal == cls.HAMSTER:
+            return [
+                ('Dorado', 'Dorado'),
+                ('Sirio', 'Sirio'),
+                # ... otras razas de hámsters ...
+            ]
+        else:
+            return []
 
     def __str__(self):
         return f"{self.nombre_m} ({self.animal_m} - {self.raza_m} - {self.genero_m})"
