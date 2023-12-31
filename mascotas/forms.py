@@ -33,9 +33,24 @@ class UsuarioCreationForm(UserCreationForm):
     class Meta:
         model = Usuario
         fields = ('rut_usuario','nombre_u', 'apellido_u', 'genero_u', 'fecha_nac_u', 'id_u', 'password1', 'password2','email','telefono_u', 'ciudad_u')
+        labels = {
+        'rut_usuario': 'Rut usuario',
+        'nombre_u': 'Nombre',
+        'apellido_u': 'Apellido',
+        'genero_u': 'Género',
+        'fecha_nac_u': 'Fecha de nacimiento',
+        'id_u': 'ID Usuario',
+        'password1': 'Contraseña',
+        'password2': 'Confirmación de contraseña',
+        'email': 'Email',
+        'telefono_u': 'Teléfono',
+        'ciudad_u': 'Ciudad',
+    }
         widgets = {
             'fecha_nac_u': DateInput(),
         }
+
+
 
 class SuperUsuarioForm(forms.ModelForm):
     class Meta:

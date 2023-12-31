@@ -33,8 +33,6 @@ def registrar_usuario(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            id_u = form.cleaned_data['id_u']
-
             try:
                 # Intenta guardar el usuario
                 form.save()
@@ -89,7 +87,10 @@ def logeado(request):
             return render(request, 'logeado.html', {'user': user})
         else:
             # Manejar el caso en que la autenticación falla
-            return render(request, 'login.html', {'error_message': 'Usuario o contraseña incorrectos'})
+            messages.error(request, 'Usuario o contraseña incorrectos')
+            return redirect('login')
+
+    return render(request, 'login.html')
 
 
 

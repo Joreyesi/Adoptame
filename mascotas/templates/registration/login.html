@@ -1,29 +1,89 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión</title>
+
+    <!-- Agrega el enlace al CSS de Bootstrap aquí -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #login-container {
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            margin-top: 50px; /* Ajusta este valor según tus necesidades */
+        }
+
+        #error-message {
+            margin-top: 10px;
+            color: red;
+        }
+    </style>
 </head>
 <body>
 
-    <h1>Iniciar Sesión</h1>
+    <div id="login-container">
+        <h1>Iniciar Sesión</h1>
 
-    {% if error_message %}
-        <p style="color: red;">{{ error_message }}</p>
-    {% endif %}
+        <!-- Agrega el modal de Bootstrap -->
+        <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="errorModalLabel">Error de autenticación</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="error-message"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <form method="post" action="{% url 'logeado' %}">
-        {% csrf_token %}
-        <label for="id_u">ID Usuario:</label>
-        <input type="text" id="id_u" name="id_u" required><br>
-    
-        <label for="password">Contraseña:</label>
-        <input type="password" id="password" name="password" required><br>
-        <input type="hidden" name="next" value="{{ request.GET.next }}">
-    
-        <input type="submit" value="Iniciar Sesión">
-    </form>
-    
+        <form id="login-form" method="post" action="{% url 'logeado' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_u">ID Usuario:</label>
+                <input type="text" id="id_u" name="id_u" class="form-control" required>
+            </div>
+        
+            <div class="form-group">
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password" class="form-control" required>
+            </div>
+            
+            <input type="hidden" name="next" value="{{ request.GET.next }}">
+            
+            <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+        </form>
+
+        <!-- Mostrar mensajes de error -->
+        {% for message in messages %}
+            <div id="error-message">{{ message }}</div>
+        {% endfor %}
+        <!-- Fin de mostrar mensajes de error -->
+    </div>
+
+    <!-- Agrega los scripts de Bootstrap y jQuery al final del body -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- No necesitas el script para mostrar el modal si hay un error, ya que estás utilizando mensajes de Django -->
 </body>
 </html>

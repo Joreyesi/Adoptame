@@ -4,22 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Usuario Logeado</title>
+
+    <!-- Agrega el enlace al CSS de Bootstrap aquí -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-<body>
+<body class="container mt-5">
 
     {% if user.is_authenticated %}
 
-    <h1>Bienvenido, {{ user.id_u }}</h1>
+    <div class="text-center">
+        <h1>Bienvenido, {{ user.id_u }}</h1>
 
-    <!-- Agrega el botón para cerrar sesión -->
-    <a href="{% url 'logout' %}">Cerrar sesión</a>
+        <!-- Agrega el botón para cerrar sesión -->
+        <a class="btn btn-danger mt-3" href="{% url 'logout' %}">Cerrar sesión</a>
 
-    <!-- Agrega el botón para redirigir a listado_mascotas.html -->
-    <a href="{% url 'listado_mascotas' %}">Ir a Listado de Mascotas</a>
+        <!-- Agrega el botón para redirigir a listado_mascotas.html -->
+        <a class="btn btn-primary mt-3" href="{% url 'listado_mascotas' %}">Ir a Listado de Mascotas</a>
+    </div>
     
     {% else %}
-    <p>Usuario no autenticado</p>
+    <p class="text-center">Usuario no autenticado</p>
     {% endif %}
 
+    <!-- Agrega los scripts de Bootstrap y jQuery al final del body -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

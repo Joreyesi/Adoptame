@@ -4,33 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio</title>
-</head>
-<body>
 
-    <h1>Bienvenido al Sitio</h1>
+    <!-- Agrega el enlace al CSS de Bootstrap aquí -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="container mt-5">
+
+    <h1 class="text-center">Bienvenido al Sitio</h1>
 
     {% if user.is_authenticated %}
         {# Si el usuario ya está autenticado, muestra un saludo y un enlace para cerrar sesión #}
-        <p>Hola, {{ user.id_u }}. <a href="{% url 'logout' %}">Cerrar sesión</a></p>
-        <a href="{% url 'listado_mascotas' %}">Listado de mascotas</a>
+        <div class="d-flex justify-content-between">
+            <p class="text-center">Hola, {{ user.id_u }}.</p>
+            <a href="{% url 'logout' %}" class="btn btn-danger">Cerrar sesión</a>
+        </div>
+        <div class="d-flex justify-content-start">
+            <a href="{% url 'listado_mascotas' %}" class="btn btn-primary">Listado de mascotas</a>
+        </div>
         {% if user.is_staff %}
             {# Si el usuario es admin, muestra botones adicionales #}
-            <p>¿Eres un administrador?</p>
-            <a href="{% url 'ingresar_mascota' %}">Ingresar Mascota</a>
-            <br>
-            <a href="{% url 'adoptar_mascota_lista' %}">Ver Listado de Mascotas Adoptadas</a>
+            <div class="text-center mt-3">
+                <a href="{% url 'ingresar_mascota' %}" class="btn btn-success">Ingresar Mascota</a>
+                <br>
+                <a href="{% url 'adoptar_mascota_lista' %}" class="btn btn-info">Ver Listado de Mascotas Adoptadas</a>
+            </div>
         {% endif %}
     {% else %}
-        {# Si el usuario no está autenticado, muestra un enlace para ir a la página de inicio de sesión #}
-        <p>¿Eres un usuario normal? <a href="{% url 'user_login' %}">Registrarse</a></p>
+        {# Si el usuario no está autenticado, muestra el formulario de inicio de sesión y enlace para registrarse #}
+        <div class="text-center mt-3">
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-success">Iniciar sesión</button>
+            </form>
+        </div>
 
-        {# Formulario de inicio de sesión #}
-        <form method="post" action="{% url 'login' %}">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Iniciar sesión</button>
-        </form>
+        <div class="text-center mt-3">
+            <p> <a href="{% url 'user_login' %}" class="btn btn-primary">Registrarse</a></p>
+        </div>
     {% endif %}
 
+    <!-- Agrega los scripts de Bootstrap y jQuery al final del body -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
