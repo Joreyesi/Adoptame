@@ -24,21 +24,48 @@ class Mascota(models.Model):
         'Perro': [
             ('Chihuahua', 'Chihuahua'),
             ('Labrador', 'Labrador'),
+            ('Salchicha (Dachshund)', 'Salchicha (Dachshund)'),
+            ('Dálmata', 'Dálmata'),
+            ('Bulldog', 'Bulldog'),
+            ('Pastor Alemán', 'Pastor Alemán'),
+            ('Golden Retriever', 'Golden Retriever'),
+            ('Caniche', 'Caniche'),
+            ('Boxer', 'Boxer'),
+            ('Husky Siberiano', 'Husky Siberiano'),
             # ... otras razas de perros ...
         ],
         'Gato': [
             ('Siames', 'Siames'),
             ('Persa', 'Persa'),
+            ('Maine Coon', 'Maine Coon'),
+            ('Bengal', 'Bengal'),
+            ('Sphynx', 'Sphynx'),
+            ('Ragdoll', 'Ragdoll'),
+            ('British Shorthair', 'British Shorthair'),
+            ('Abyssinian', 'Abyssinian'),
+            ('Scottish Fold', 'Scottish Fold'),
+            ('Burmese', 'Burmese'),
             # ... otras razas de gatos ...
         ],
         'Conejo': [
             ('Holandes', 'Holandes'),
             ('Enano Holandes', 'Enano Holandes'),
+            ('Cabeza de León', 'Cabeza de León'),
+            ('Jersey Wooly', 'Jersey Wooly'),
+            ('Rex', 'Rex'),
+            ('Mini Rex', 'Mini Rex'),
+            ('Californiano', 'Californiano'),
+            ('Holland Lop', 'Holland Lop'),
+            ('Flemish Giant', 'Flemish Giant'),
+            ('Mini Lop', 'Mini Lop'),
             # ... otras razas de conejos ...
         ],
         'Hamster': [
             ('Dorado', 'Dorado'),
             ('Sirio', 'Sirio'),
+            ('Roborovski', 'Roborovski'),
+            ('Campbell', 'Campbell'),
+            ('Chino', 'Chino'),
             # ... otras razas de hamsters ...
         ],
     }
